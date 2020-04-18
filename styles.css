@@ -1,0 +1,55 @@
+body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: #000;
+}
+
+#spotlight_wrapper {
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+#spotlight_input {
+    display: block;
+    width: 628px;
+    height: 56px;
+    margin: auto;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    -webkit-box-shadow: 0 25px 60px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 25px 60px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 1.6rem;
+    background-color: #f8f5f4;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjIuNyAyMi41IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMi43IDIyLjUiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxjaXJjbGUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2NzY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgY3g9IjguMSIgY3k9IjguNCIgcj0iNi44Ii8+PGxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2NzY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgeDE9IjEzLjIiIHkxPSIxMi45IiB4Mj0iMjEuNSIgeTI9IjIxLjQiLz48L3N2Zz4=);
+    background-position: left 17px center;
+    background-repeat: no-repeat;
+    background-size: 3.5%;
+    padding: 0 52px;
+}
+
+#spotlight_input::-webkit-input-placeholder {
+    color: #666666;
+}
+
+#spotlight_results {
+    overflow: hidden;
+    width: 732px;
+    background-color: #f8f5f4;
+    height: 400px;
+    display: none;
+    margin: auto;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    box-shadow: 0 25px 60px 10px rgba(0, 0, 0, 0.3);
+}
+
+span.prop {
+    font-weight: 600;
+}

@@ -25,8 +25,8 @@ function parseInput(input) {
         const match = input.match(action.regexp);
         if (match) {
             const index = input.indexOf(match[1]);
-            let url = action.action.url(action, input.slice(index).toLowerCase());
-            return url;
+            let result = action.action.resolve(action, input.slice(index).toLowerCase());
+            return result;
         }
     }
 }

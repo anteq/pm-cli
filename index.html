@@ -2,12 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Jira Spotlight</title>
   </head>
   <body>
-   <input id="spotlight-input"></input>
+    <body>
+      <div id="spotlight_wrapper">
+          <input type="text" id="spotlight_input" placeholder="JIRA search" />
+          <div id="spotlight_results">
+
+          </div>
+      </div>
+    </body>
   </body>
 </html>

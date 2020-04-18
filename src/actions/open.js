@@ -5,9 +5,12 @@ module.exports = {
     name: 'Open issue by code',
     triggers: ['{project}-'],
     arguments: true,
-    url: createOpenUrl
+    resolve: resolveOpen
 };
 
-function createOpenUrl(context, value) {
-    return `${context.project.baseUrl}/browse/${context.project.key.toUpperCase()}-${parseInt(value)}`;
+function resolveOpen(context, value) {
+    return {
+        url: `${context.project.baseUrl}/browse/${context.project.key.toUpperCase()}-${parseInt(value)}`,
+        text: 'Open task'
+    };
 }

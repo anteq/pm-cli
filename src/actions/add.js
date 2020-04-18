@@ -6,10 +6,10 @@ module.exports = {
     name: 'Create new issue',
     triggers: ['{project} new', '{project} create', '{project} add'],
     arguments: true,
-    url: createAddUrl
+    resolve: resolveAdd
 };
 
-function createAddUrl(context, value) {
+function resolveAdd(context, value) {
     var props = [];
     let arguments = parseArguments(value);
     addProject(context.project, props);
@@ -18,7 +18,10 @@ function createAddUrl(context, value) {
     addPriority(arguments.properties, props);
     addIssueType(arguments.properties, props);
     addSummary(arguments.summary, props);
-    return `${context.project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.join('&')}`;
+    return {
+        url: `${context.project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.join('&')}`,
+        text: 'Add new issue'
+    };
 }
 
 function parseArguments(input) {

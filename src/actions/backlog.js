@@ -5,9 +5,12 @@ module.exports = {
     name: 'See backlog',
     triggers: ['{project} backlog'],
     arguments: false,
-    url: createBacklogUrl
+    resolve: resolveBacklog
 };
 
-function createBacklogUrl(context, value) {
-    return `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}&view=planning`;
+function resolveBacklog(context, value) {
+    return {
+        url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}&view=planning`,
+        text: 'Go to Backlog'
+    };
 }
