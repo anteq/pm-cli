@@ -24,8 +24,9 @@ function parseInput(input) {
     for (let action of search) {
         const match = input.match(action.regexp);
         if (match) {
-            const index = input.indexOf(match[1]);
-            let result = action.action.resolve(action, input.slice(index).toLowerCase());
+            // console.debug(match);
+            const index = match[1] === "" ? match[0].length : input.indexOf(match[1]);
+            let result = action.action.resolve(action, input.slice(index).toLowerCase().trim());
             return result;
         }
     }

@@ -1,8 +1,9 @@
-const add = require('./actions/add');
-const backlog = require('./actions/backlog')
-const open = require('./actions/open')
-const search = require('./actions/search')
+const addIssue = require('./actions/addIssue');
+const openBacklog = require('./actions/openBacklog');
+const openIssue = require('./actions/openIssue');
+const openProject = require('./actions/openProject');
+const searchIssues = require('./actions/searchIssues');
 
 module.exports = { 
-    actions: [open, add, backlog, search]
+    actions: [openIssue, addIssue, openBacklog, searchIssues, openProject]
 };

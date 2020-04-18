@@ -3,7 +3,7 @@ const { issueTypes, priorities } = require('../constants');
 const { wrap } = require('../wrap');
 
 module.exports = {
-    key: 'add',
+    key: 'addIssue',
     name: 'Create new issue',
     triggers: ['{project} new', '{project} create', '{project} add'],
     arguments: true,
@@ -58,7 +58,7 @@ function findProject(project) {
         key: 'project',
         jiraKey: 'pid',
         value: project.jiraId,
-        name: project.name
+        name: project.key.toUpperCase()
     } : null;
 }
 

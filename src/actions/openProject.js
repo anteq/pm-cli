@@ -1,0 +1,16 @@
+const { wrap } = require('../wrap');
+
+module.exports = {
+    key: 'openProject',
+    name: 'Open project by code',
+    triggers: ['{project}'],
+    arguments: false,
+    resolve: resolveOpen
+};
+
+function resolveOpen(context, value) {
+    return {
+        url: `${context.project.baseUrl}/browse/${context.project.key}`,
+        text: wrap(`Open {project}`, {project: context.project.key.toUpperCase()})
+    };
+}

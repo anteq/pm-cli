@@ -1,8 +1,8 @@
 const { wrap } = require('../wrap');
 
 module.exports = {
-    key: 'search',
-    name: 'Search',
+    key: 'searchIssues',
+    name: 'Search issues',
     triggers: ['{project} '],
     arguments: true,
     resolve: resolveSearch
@@ -11,7 +11,7 @@ module.exports = {
 function resolveSearch(context, value) {
     return {
         url: createSearchUrl(context, value),
-        text: wrap(`Search for {search} within {project}`, { search: value, project: context.project.name })
+        text: wrap(`Search ${value ? 'for {search}': ''} within {project}`, { search: value, project: context.project.key.toUpperCase() })
     };
 }
 
