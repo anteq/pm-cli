@@ -11,14 +11,15 @@ module.exports = {
 };
 
 function resolveAdd(context, value) {
-    var props = [];
     let arguments = parseArguments(value);
-    addProject(context.project, props);
-    addReporter(reporter, props);
-    addAssignee(arguments.properties, props);
-    addPriority(arguments.properties, props);
-    addIssueType(arguments.properties, props);
-    addSummary(arguments.summary, props);
+    let props = [
+        findProject(context.project),
+        findReporter(reporter),
+        findAssignee(arguments.properties),
+        findPriority(arguments.properties),
+        findIssueType(arguments.properties),
+        findSummary(arguments.summary)
+    ].filter(x => !!x);
     return {
         url: buildUrl(props, context),
         text: buildText(props)
@@ -52,82 +53,62 @@ function parseArguments(input) {
     return { properties, summary };
 }
 
-function addProject(project, props) {
-    if (project) {
-        props.push({
-            key: 'project',
-            jiraKey: 'pid',
-            value: project.jiraId,
-            name: project.name
-        });
-    } else {
-        throw new Error(`Project ${project.key} is not defined.`);
-    }
+function findProject(project) {
+    return project ? {
+        key: 'project',
+        jiraKey: 'pid',
+        value: project.jiraId,
+        name: project.name
+    } : null;
 }
 
-function addReporter(reporter, props) {
+function findReporter(reporter) {
     const user = people.find(x => x.key === reporter);
-    if (user) {
-        props.push({
-            key: 'reporter',
-            jiraKey: 'reporter',
-            value: user.jiraId,
-            name: user.name
-        });
-    } else {
-        throw new Error(`User ${reporter} is not defined and cannot be a reporter.`);
-    }
+    return user ? {
+        key: 'reporter',
+        jiraKey: 'reporter',
+        value: user.jiraId,
+        name: user.name
+    } : null;
 }
 
-function addSummary(summary, props) {
-    if (summary) {
-        const formatted = summary.join("").replace(/\"/g, "");
-        props.push({
-            key: 'summary',
-            jiraKey: 'summary',
-            value: formatted,
-            name: formatted
-        });
-    }
+function findSummary(summary) {
+    const formatted = summary ? summary.join("").replace(/\"/g, "") : null;
+    return formatted ? {
+        key: 'summary',
+        jiraKey: 'summary',
+        value: formatted,
+        name: formatted
+    } : null;
 }
 
-function addAssignee(values, props) {
-    addGenericValue('assignee', people, values, props);
+function findAssignee(inputs) {
+    return findGenericJiraValue('assignee', people, inputs);
 }
 
-function addIssueType(values, props) {
-    addGenericValue('issuetype', issueTypes, values, props);
+function findIssueType(inputs) {
+    return findGenericJiraValue('issuetype', issueTypes, inputs);
 }
 
-function addPriority(values, props) {
-    addGenericValue('priority', priorities, values, props);
+function findPriority(inputs) {
+    return findGenericJiraValue('priority', priorities, inputs);
 }
 
-function addGenericValue(genericValueKey, availableGenericValues, values, props) {
+function findGenericJiraValue(jiraKey, jiraValues, inputs) {
     var toBeAdded;
-    for (let candidate of availableGenericValues) {
+    for (let candidate of jiraValues) {
         let triggers = [...(candidate.triggers || []), candidate.key];
-        let matchFound = triggers.map(trigger => values.includes(trigger)).reduce((a, b) => a || b);
+        let matchFound = triggers.map(trigger => inputs.includes(trigger)).reduce((a, b) => a || b);
         if (matchFound) {
-            toBeAdded = {
-                key: genericValueKey,
-                jiraKey: genericValueKey,
-                value: candidate.jiraId,
-                name: candidate.name
-            };
+            toBeAdded = candidate;
             break;
         }
     }
-    if (!toBeAdded && defaults[genericValueKey]) {
-        let match = availableGenericValues.find(x => x.key === defaults[genericValueKey]);
-        toBeAdded = {
-            key: genericValueKey,
-            jiraKey: genericValueKey,
-            value: match.jiraId,
-            name: match.name
-        };
-    }
-    if (toBeAdded) {
-        props.push(toBeAdded);
-    }
+    toBeAdded = toBeAdded || (defaults[jiraKey] ? jiraValues.find(x => x.key === defaults[jiraKey]) : null);
+    return toBeAdded ? {
+        key: jiraKey,
+        jiraKey: jiraKey,
+        value: toBeAdded.jiraId,
+        name: toBeAdded.name
+    } : null;
 }
