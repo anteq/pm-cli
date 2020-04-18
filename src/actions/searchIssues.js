@@ -16,6 +16,6 @@ function resolveSearch(context, value) {
 }
 
 function createSearchUrl(context, value) {
-    var searchString = `project = ${context.project.key.toUpperCase()} and text ~ "${value}" order by created desc`;
+    var searchString = `project = ${context.project.key.toUpperCase()} ${ value ? 'and text ~"' + value + '\"' : ''} order by created desc`;
     return `${context.project.baseUrl}/issues/?jql=${escape(searchString)}`;
 }
