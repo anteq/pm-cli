@@ -13,12 +13,13 @@ function createWindow() {
   })
   mainWindow.loadFile('index.html')
   mainWindow.on('blur', () => {
-    mainWindow.close();
+    setTimeout(() => {mainWindow.close()}, 500);
   });
   // mainWindow.webContents.openDevTools()
 }
 
 app.on('ready', () => {
+  app.dock.hide();
   createTray();
   registerShortcut();
 })
@@ -26,7 +27,7 @@ app.on('ready', () => {
 function createTray() {
   tray = new Tray('jira-spotlightTemplate.png')
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Open', type: 'normal', click: createWindow },
+    { label: 'Open (⌃+⌘+Space)', sublabel: '', type: 'normal', click: createWindow },
     { label: 'Settings', type: 'normal' },
     { type: 'separator' },
     { label: 'Quit', type: 'normal', click: () => app.quit() },
