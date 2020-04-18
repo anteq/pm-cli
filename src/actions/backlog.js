@@ -1,4 +1,4 @@
-const { projects } = require('../config');
+const { wrap } = require('../wrap');
 
 module.exports = {
     key: 'backlog',
@@ -11,6 +11,6 @@ module.exports = {
 function resolveBacklog(context, value) {
     return {
         url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}&view=planning`,
-        text: 'Go to Backlog'
+        text: wrap(`Go to {project} Backlog`, { project: context.project.name })
     };
 }

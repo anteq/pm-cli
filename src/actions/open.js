@@ -1,4 +1,4 @@
-const { projects } = require('../config');
+const { wrap } = require('../wrap');
 
 module.exports = {
     key: 'open',
@@ -11,6 +11,6 @@ module.exports = {
 function resolveOpen(context, value) {
     return {
         url: `${context.project.baseUrl}/browse/${context.project.key.toUpperCase()}-${parseInt(value)}`,
-        text: 'Open task'
+        text: wrap(`Open {issue}`, { issue: `${context.project.key.toUpperCase()}-${parseInt(value)}` })
     };
 }

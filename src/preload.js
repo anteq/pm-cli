@@ -15,7 +15,7 @@ function main() {
       document.getElementById('spotlight_results').style.display = "none";
     }
   });
-  window.addEventListener('keypress', (e) => {
+  window.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && result.url) shell.openExternal(result.url, { activate: true });
     if (e.keyCode == '27') remote.getCurrentWindow().close();
   });
