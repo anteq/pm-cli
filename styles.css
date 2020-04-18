@@ -11,11 +11,24 @@ body {
     width: 100%;
 }
 
+#spotlight_column {
+    width: 628px;
+    margin: auto;
+    position: relative;
+}
+
+#spotlight_description {
+    position: absolute;
+    top: 22px;
+    right: -92px;
+    font-size: 0.8rem;
+    color: gray;
+}
+
 #spotlight_input {
     display: block;
-    width: 628px;
     height: 56px;
-    margin: auto;
+    width: 100%;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     -webkit-appearance: none;

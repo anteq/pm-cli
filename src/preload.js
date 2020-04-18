@@ -8,12 +8,7 @@ function main() {
   });
   window.addEventListener('keyup', (e) => {
     result = parseInput(document.getElementById('spotlight_input').value);
-    if (result) {
-      document.getElementById('spotlight_results').style.display = "block";
-      document.getElementById('spotlight_results').innerHTML = result.text;
-    } else {
-      document.getElementById('spotlight_results').style.display = "none";
-    }
+    document.getElementById('spotlight_description').innerHTML = result ? result.text : '';
   });
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && result.url) shell.openExternal(result.url, { activate: true });

@@ -20,7 +20,7 @@ npm start
 - [ ] clean CSS
 - [ ] add live search in Safari history
 - [x] add descriptions
-- [ ] format description
+- [x] format description
 - [ ] add icons
 - [ ] settings page 
 
