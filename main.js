@@ -2,7 +2,7 @@
 const { app, BrowserWindow, globalShortcut, Menu, Tray } = require('electron')
 const path = require('path');
 
-const DEBUG = false;
+const DEBUG = true;
 
 function createWindow() {
   const mainWindow = new BrowserWindow({

@@ -1,7 +1,7 @@
 {
     "reporter": "antek",
     "defaults": {
-        "issueType": "bug",
+        "issuetype": "task",
         "priority": "major"
     },
     "projects": [
