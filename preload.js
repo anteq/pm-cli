@@ -110,7 +110,7 @@ function main() {
   window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('spotlight-input').focus();
   });
-  window.addEventListener('keypress', (e) => {
+  window.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const url = parseInput(document.getElementById('spotlight-input').value)
       shell.openExternal(url, { activate: true });
