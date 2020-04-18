@@ -10,7 +10,7 @@ module.exports = {
 
 function resolveOpen(context, value) {
     return {
-        url: `${context.project.baseUrl}/browse/${context.project.key}`,
+        url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}`,
         text: wrap(`Open {project}`, {project: context.project.key.toUpperCase()})
     };
 }
