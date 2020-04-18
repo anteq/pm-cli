@@ -13,6 +13,17 @@ npm install
 npm start
 ```
 
+## todo
+- [x] move basic functionality from BTT to electron
+- [x] move basic CSS
+- [x] refactor actions
+- [ ] clean CSS
+- [ ] add live search in Safari history
+- [x] add descriptions
+- [ ] format description
+- [ ] add icons
+- [ ] settings page 
+
 ## License
 
 [CC0 1.0 (Public Domain)](LICENSE.md)
