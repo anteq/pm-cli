@@ -37,15 +37,20 @@ app.on('ready', () => {
 
 function createConfig() {
   let schema = JSON.parse(fs.readFileSync('schema.json', 'utf8'));
-  let defaults = {};
-  global.config = new Store(
-    {
-      defaults,
-      schema,
-      fileExtension: 'yaml',
-	    serialize: yaml.safeDump,
-	    deserialize: yaml.safeLoad
-  });
+  
+  try {
+    global.config = new Store(
+      {
+        defaults: {},
+        schema: schema.properties,
+        fileExtension: 'yaml',
+        serialize: yaml.safeDump,
+        deserialize: yaml.safeLoad
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
 }
 
 function openConfig() {

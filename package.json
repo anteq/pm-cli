@@ -1,13 +1,15 @@
 {
-  "name": "jira-spotlight",
+  "name": "pm-cli",
   "version": "0.0.1",
   "description": "Spotlight-like Jira search for MacOS",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/anteq/jira-spotlight",
+  "repository": "https://github.com/anteq/pm-cli",
   "keywords": [
+    "launcher",
+    "cli",
     "jira",
     "spotlight",
     "MacOS"
