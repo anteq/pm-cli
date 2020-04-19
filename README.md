@@ -1,6 +1,6 @@
-# pm-cli
+# Project Manager CLI (pm-cli)
 
-Spotlight-like Jira launcher for MacOS. Built using Electron and VanillaJS.
+Spotlight-like launcher for most common Project Management actions. Built using Electron and VanillaJS.
 
 ![pm-cli demo](demo.gif)
 
