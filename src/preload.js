@@ -5,6 +5,9 @@ function main() {
   var result;
   window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('spotlight_input').focus();
+    if (remote.getGlobal('darkMode')) {
+      document.querySelector('body').classList.add('dark');
+    }
   });
   window.addEventListener('keyup', (e) => {
     result = parseInput(document.getElementById('spotlight_input').value);

@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, globalShortcut, Menu, Tray } = require('electron')
+const { app, nativeTheme, BrowserWindow, globalShortcut, Menu, Tray } = require('electron')
 const path = require('path');
 
 const DEBUG = false;
@@ -28,6 +28,7 @@ app.on('ready', () => {
   app.dock.hide();
   createTray();
   registerShortcut();
+  setDarkMode();
 })
 
 function createTray() {
@@ -48,6 +49,12 @@ function registerShortcut() {
   });
   if (!ret) {
     console.log('registration failed')
+  }
+}
+
+function setDarkMode() {
+  if (nativeTheme.shouldUseDarkColors) {
+    global.darkMode = true;
   }
 }
 

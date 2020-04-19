@@ -25,6 +25,7 @@ npm start
 - [ ] settings page 
 - [ ] GitHub support
 - [x] custom URLs config
+- [x] dark mode support
 
 ## License
 

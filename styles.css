@@ -46,8 +46,9 @@ body {
     padding: 0 52px;
 }
 
-#spotlight_input::-webkit-input-placeholder {
-    color: #666666;
+.dark #spotlight_input {
+    background-color: #47494e;
+    color: #ffffff;
 }
 
 #spotlight_results {
