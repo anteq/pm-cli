@@ -3,6 +3,7 @@ const { wrap } = require('../wrap');
 module.exports = {
     key: 'openProject',
     name: 'Open project by code',
+    context: 'project',
     triggers: ['{project}'],
     arguments: false,
     resolve: resolveOpen

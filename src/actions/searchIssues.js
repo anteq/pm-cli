@@ -3,6 +3,7 @@ const { wrap } = require('../wrap');
 module.exports = {
     key: 'searchIssues',
     name: 'Search issues',
+    context: 'project',
     triggers: ['{project} '],
     arguments: true,
     resolve: resolveSearch

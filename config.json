@@ -88,5 +88,25 @@
             "triggers": ["woj", "wojciech"],
             "jiraId": "5da4173a260e4d0c422332f9"
         }
+    ],
+    "custom": [
+        {
+            "key": "jenkins",
+            "name": "Jenkins",
+            "triggers": ["jenkins", "build"],
+            "url": "http://jenkins.tagger.lan"
+        },
+        {
+            "key": "julia",
+            "name": "Julia Engel in Tagger",
+            "triggers": ["julia", "tagger julia"],
+            "url": "https://app.taggermedia.com/profile/344913"
+        },
+        {
+            "key": "justin",
+            "name": "Justin Bieber in Tagger",
+            "triggers": ["justin", "tagger justin"],
+            "url": "https://app.taggermedia.com/profile/80"
+        }
     ]
 }

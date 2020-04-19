@@ -3,6 +3,7 @@ const { wrap } = require('../wrap');
 module.exports = {
     key: 'openBacklog',
     name: 'See backlog',
+    context: 'project',
     triggers: ['{project} backlog'],
     arguments: false,
     resolve: resolveBacklog

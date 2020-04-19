@@ -1,22 +1,35 @@
 const { actions } = require('./actions');
-const { projects } = require('./config');
+const { custom, projects } = require('./config');
 
 module.exports = { parseInput };
 
 function configureSearch() {
     var regexps = [];
-    for (let project of projects) {
-        for (let action of actions) {
-            for (let trigger of action.triggers) {
-                regexps.push({
-                    project,
-                    action,
-                    regexp: new RegExp(trigger.replace('{project}', project.key.toLowerCase()) + '(.*)', 'i')
-                });
+    for (let action of actions) {
+        if (action.context === 'project') {
+            for (let project of projects) {
+                pushTriggerRegexps(action, project, project.key.toLowerCase(), regexps);
+            }   
+        } else if (action.context === 'custom') {
+            for (let url of custom) {
+                for (let trigger of url.triggers) {
+                    pushTriggerRegexps(action, url, trigger, regexps);
+                }
             }
         }
     }
     return regexps;
+}
+
+function pushTriggerRegexps(action, context, replacement, regexps) {
+    for (let trigger of action.triggers) {
+        var regexObject = {
+            action,
+            regexp: new RegExp(trigger.replace(`{${action.context}}`, replacement) + '(.*)', 'i')
+        };
+        regexObject[action.context] = context;
+        regexps.push(regexObject);
+    }
 }
 
 function parseInput(input) {

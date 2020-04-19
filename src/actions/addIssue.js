@@ -5,6 +5,7 @@ const { wrap } = require('../wrap');
 module.exports = {
     key: 'addIssue',
     name: 'Create new issue',
+    context: 'project',
     triggers: ['{project} new', '{project} create', '{project} add'],
     arguments: true,
     resolve: resolveAdd

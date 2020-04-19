@@ -24,7 +24,7 @@ npm start
 - [ ] add icons
 - [ ] settings page 
 - [ ] GitHub support
-- [ ] custom URLs config
+- [x] custom URLs config
 
 ## License
 
