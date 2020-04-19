@@ -1,10 +1,13 @@
 {
   "name": "pm-cli",
-  "version": "0.0.1",
+  "version": "0.2",
   "description": "Spotlight-like Jira search for MacOS",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "postinstall": "install-app-deps",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": "https://github.com/anteq/pm-cli",
   "keywords": [
@@ -18,10 +21,27 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "@types/node": "^13.13.0",
-    "electron": "^8.2.3"
+    "electron": "^8.2.3",
+    "electron-builder": "^22.5.1"
   },
   "dependencies": {
     "electron-store": "^5.1.1",
     "js-yaml": "^3.13.1"
+  },
+  "build": {
+    "appId": "pm-cli",
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   }
 }
