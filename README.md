@@ -1,6 +1,6 @@
 # Project Manager CLI (pm-cli)
 
-Spotlight-like launcher for most common Project Management actions. Built using Electron and VanillaJS.
+Spotlight-like launcher for some of common daily actions of a Project Manager. Built using Electron and VanillaJS.
 
 ![pm-cli demo](demo.gif)
 
