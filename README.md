@@ -1,4 +1,4 @@
-# jira-spotlight
+# pm-cli
 
 Spotlight-like Jira search for MacOS.
 
@@ -23,6 +23,8 @@ npm start
 - [x] format description
 - [ ] add icons
 - [ ] settings page 
+- [ ] GitHub support
+- [ ] custom URLs config
 
 ## License
 
