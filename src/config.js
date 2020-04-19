@@ -1,3 +1,3 @@
-var fs = require('fs');
+const { remote } = require('electron');
 
-module.exports = JSON.parse(fs.readFileSync('config.json', 'utf8'))
+module.exports = remote.getGlobal('config').store;

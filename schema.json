@@ -1,0 +1,419 @@
+{
+    "reporter": {
+        "$id": "#/properties/reporter",
+        "type": "string",
+        "title": "The Reporter Schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": [
+            "antek"
+        ]
+    },
+    "defaults": {
+        "$id": "#/properties/defaults",
+        "type": "object",
+        "title": "The Defaults Schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": {},
+        "examples": [
+            {
+                "issuetype": "task",
+                "priority": "major"
+            }
+        ],
+        "additionalProperties": true,
+        "required": [
+            "issuetype",
+            "priority"
+        ],
+        "properties": {
+            "issuetype": {
+                "$id": "#/properties/defaults/properties/issuetype",
+                "type": "string",
+                "title": "The Issuetype Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                    "task"
+                ]
+            },
+            "priority": {
+                "$id": "#/properties/defaults/properties/priority",
+                "type": "string",
+                "title": "The Priority Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": [
+                    "major"
+                ]
+            }
+        }
+    },
+    "projects": {
+        "$id": "#/properties/projects",
+        "type": "array",
+        "title": "The Projects Schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": [],
+        "examples": [
+            [
+                {
+                    "key": "pt",
+                    "name": "Tagger Product",
+                    "jiraRapidViewId": 15.0,
+                    "baseUrl": "https://scalaric.atlassian.net",
+                    "jiraId": 10500.0
+                },
+                {
+                    "key": "tm",
+                    "name": "Tagger",
+                    "jiraRapidViewId": 8.0,
+                    "baseUrl": "https://scalaric.atlassian.net",
+                    "jiraId": 10200.0
+                }
+            ]
+        ],
+        "additionalItems": true,
+        "items": {
+            "$id": "#/properties/projects/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "key": "pt",
+                    "name": "Tagger Product",
+                    "jiraRapidViewId": 15.0,
+                    "baseUrl": "https://scalaric.atlassian.net",
+                    "jiraId": 10500.0
+                },
+                {
+                    "jiraRapidViewId": 8.0,
+                    "baseUrl": "https://scalaric.atlassian.net",
+                    "jiraId": 10200.0,
+                    "key": "tm",
+                    "name": "Tagger"
+                }
+            ],
+            "additionalProperties": true,
+            "required": [
+                "key",
+                "name",
+                "jiraId",
+                "jiraRapidViewId",
+                "baseUrl"
+            ],
+            "properties": {
+                "key": {
+                    "$id": "#/properties/projects/items/properties/key",
+                    "type": "string",
+                    "title": "The Key Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "pt"
+                    ]
+                },
+                "name": {
+                    "$id": "#/properties/projects/items/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Tagger Product"
+                    ]
+                },
+                "jiraId": {
+                    "$id": "#/properties/projects/items/properties/jiraId",
+                    "type": "integer",
+                    "title": "The Jiraid Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        10500.0
+                    ]
+                },
+                "jiraRapidViewId": {
+                    "$id": "#/properties/projects/items/properties/jiraRapidViewId",
+                    "type": "integer",
+                    "title": "The Jirarapidviewid Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        15.0
+                    ]
+                },
+                "baseUrl": {
+                    "$id": "#/properties/projects/items/properties/baseUrl",
+                    "type": "string",
+                    "title": "The Baseurl Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "https://scalaric.atlassian.net"
+                    ]
+                }
+            }
+        }
+    },
+    "people": {
+        "$id": "#/properties/people",
+        "type": "array",
+        "title": "The People Schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": [],
+        "examples": [
+            [
+                {
+                    "triggers": [
+                        "anna"
+                    ],
+                    "jiraId": "5d92f3a91d47a50c34d4c073",
+                    "key": "ania",
+                    "name": "Ania Oruba"
+                },
+                {
+                    "key": "antek",
+                    "name": "Antek Grzanka",
+                    "jiraId": "5a299213301ed0381f22a9a1"
+                },
+                {
+                    "key": "bartek",
+                    "name": "Bartek Radziszewski",
+                    "jiraId": "557058:512b8678-e90f-43b9-a143-ee74268ae31a"
+                }
+            ]
+        ],
+        "additionalItems": true,
+        "items": {
+            "$id": "#/properties/people/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "key": "ania",
+                    "name": "Ania Oruba",
+                    "triggers": [
+                        "anna"
+                    ],
+                    "jiraId": "5d92f3a91d47a50c34d4c073"
+                },
+                {
+                    "jiraId": "5a299213301ed0381f22a9a1",
+                    "key": "antek",
+                    "name": "Antek Grzanka"
+                },
+                {
+                    "key": "bartek",
+                    "name": "Bartek Radziszewski",
+                    "jiraId": "557058:512b8678-e90f-43b9-a143-ee74268ae31a"
+                }
+            ],
+            "additionalProperties": true,
+            "required": [
+                "key",
+                "name",
+                "triggers",
+                "jiraId"
+            ],
+            "properties": {
+                "key": {
+                    "$id": "#/properties/people/items/properties/key",
+                    "type": "string",
+                    "title": "The Key Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "ania"
+                    ]
+                },
+                "name": {
+                    "$id": "#/properties/people/items/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Ania Oruba"
+                    ]
+                },
+                "triggers": {
+                    "$id": "#/properties/people/items/properties/triggers",
+                    "type": "array",
+                    "title": "The Triggers Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            "anna"
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/people/items/properties/triggers/items",
+                        "type": "string",
+                        "title": "The Items Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "anna"
+                        ]
+                    }
+                },
+                "jiraId": {
+                    "$id": "#/properties/people/items/properties/jiraId",
+                    "type": "string",
+                    "title": "The Jiraid Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "5d92f3a91d47a50c34d4c073"
+                    ]
+                }
+            }
+        }
+    },
+    "custom": {
+        "$id": "#/properties/custom",
+        "type": "array",
+        "title": "The Custom Schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": [],
+        "examples": [
+            [
+                {
+                    "triggers": [
+                        "jenkins",
+                        "build"
+                    ],
+                    "url": "http://jenkins.tagger.lan",
+                    "key": "jenkins",
+                    "name": "Jenkins"
+                },
+                {
+                    "url": "https://app.taggermedia.com/profile/344913",
+                    "key": "julia",
+                    "name": "Julia Engel in Tagger",
+                    "triggers": [
+                        "julia",
+                        "tagger julia"
+                    ]
+                },
+                {
+                    "triggers": [
+                        "justin",
+                        "tagger justin"
+                    ],
+                    "url": "https://app.taggermedia.com/profile/80",
+                    "key": "justin",
+                    "name": "Justin Bieber in Tagger"
+                }
+            ]
+        ],
+        "additionalItems": true,
+        "items": {
+            "$id": "#/properties/custom/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "triggers": [
+                        "jenkins",
+                        "build"
+                    ],
+                    "url": "http://jenkins.tagger.lan",
+                    "key": "jenkins",
+                    "name": "Jenkins"
+                },
+                {
+                    "url": "https://app.taggermedia.com/profile/344913",
+                    "key": "julia",
+                    "name": "Julia Engel in Tagger",
+                    "triggers": [
+                        "julia",
+                        "tagger julia"
+                    ]
+                },
+                {
+                    "triggers": [
+                        "justin",
+                        "tagger justin"
+                    ],
+                    "url": "https://app.taggermedia.com/profile/80",
+                    "key": "justin",
+                    "name": "Justin Bieber in Tagger"
+                }
+            ],
+            "additionalProperties": true,
+            "required": [
+                "key",
+                "name",
+                "triggers",
+                "url"
+            ],
+            "properties": {
+                "key": {
+                    "$id": "#/properties/custom/items/properties/key",
+                    "type": "string",
+                    "title": "The Key Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "jenkins"
+                    ]
+                },
+                "name": {
+                    "$id": "#/properties/custom/items/properties/name",
+                    "type": "string",
+                    "title": "The Name Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Jenkins"
+                    ]
+                },
+                "triggers": {
+                    "$id": "#/properties/custom/items/properties/triggers",
+                    "type": "array",
+                    "title": "The Triggers Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            "jenkins",
+                            "build"
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/custom/items/properties/triggers/items",
+                        "type": "string",
+                        "title": "The Items Schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": "",
+                        "examples": [
+                            "jenkins",
+                            "build"
+                        ]
+                    }
+                },
+                "url": {
+                    "$id": "#/properties/custom/items/properties/url",
+                    "type": "string",
+                    "title": "The Url Schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "http://jenkins.tagger.lan"
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -6,11 +6,11 @@ module.exports = { parseInput };
 function configureSearch() {
     var regexps = [];
     for (let action of actions) {
-        if (action.context === 'project') {
+        if (projects && action.context === 'project') {
             for (let project of projects) {
                 pushTriggerRegexps(action, project, project.key.toLowerCase(), regexps);
             }   
-        } else if (action.context === 'custom') {
+        } else if (custom && action.context === 'custom') {
             for (let url of custom) {
                 for (let trigger of url.triggers) {
                     pushTriggerRegexps(action, url, trigger, regexps);

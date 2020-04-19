@@ -1,6 +1,9 @@
 // Modules to control application life and create native browser window
 const { app, nativeTheme, BrowserWindow, globalShortcut, Menu, Tray } = require('electron')
 const path = require('path');
+const fs = require('fs');
+const yaml = require('js-yaml');
+const Store = require('electron-store');
 
 const DEBUG = false;
 
@@ -29,13 +32,31 @@ app.on('ready', () => {
   createTray();
   registerShortcut();
   setDarkMode();
+  createConfig();
 })
+
+function createConfig() {
+  let schema = JSON.parse(fs.readFileSync('schema.json', 'utf8'));
+  let defaults = {};
+  global.config = new Store(
+    {
+      defaults,
+      schema,
+      fileExtension: 'yaml',
+	    serialize: yaml.safeDump,
+	    deserialize: yaml.safeLoad
+  });
+}
+
+function openConfig() {
+  global.config.openInEditor();
+}
 
 function createTray() {
   tray = new Tray('jira-spotlightTemplate.png')
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Open (⌃+⌘+Space)', sublabel: '', type: 'normal', click: createWindow },
-    { label: 'Settings', type: 'normal' },
+    { label: 'Settings', type: 'normal', click: openConfig },
     { type: 'separator' },
     { label: 'Quit', type: 'normal', click: () => app.quit() },
   ]);

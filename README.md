@@ -22,7 +22,7 @@ npm start
 - [x] add descriptions
 - [x] format description
 - [ ] add icons
-- [ ] settings page 
+- [x] settings support with yaml file 
 - [ ] GitHub support
 - [x] custom URLs config
 - [x] dark mode support
