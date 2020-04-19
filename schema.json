@@ -1,0 +1,386 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "PM CLI schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "additionalProperties": true,
+    "required": [
+        "reporter",
+        "defaults",
+        "projects",
+        "people"
+    ],
+    "properties": {
+        "reporter": {
+            "$id": "#/properties/reporter",
+            "type": "string",
+            "title": "Reporter",
+            "description": "Key of default task reported in JIRA.",
+            "default": "",
+            "examples": [
+                "antek"
+            ]
+        },
+        "defaults": {
+            "$id": "#/properties/defaults",
+            "type": "object",
+            "title": "Defaults",
+            "description": "Defaults values",
+            "default": {
+                "issuetype": "task",
+                "priority": "major"
+            },
+            "examples": [
+                {
+                    "issuetype": "bug",
+                    "priority": "minor"
+                }
+            ],
+            "additionalProperties": true,
+            "properties": {
+                "issuetype": {
+                    "$id": "#/properties/defaults/properties/issuetype",
+                    "type": "string",
+                    "title": "Issue Type",
+                    "description": "Key of default issue type",
+                    "default": "task"
+                },
+                "priority": {
+                    "$id": "#/properties/defaults/properties/priority",
+                    "type": "string",
+                    "title": "Priority",
+                    "description": "Key of default priority",
+                    "default": "major"
+                }
+            }
+        },
+        "projects": {
+            "$id": "#/properties/projects",
+            "type": "array",
+            "title": "Projects",
+            "description": "Defines JIRA projects that are to be supported.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "key": "sp",
+                        "name": "Sample Project",
+                        "jiraRapidViewId": 15,
+                        "baseUrl": "https://sample-project.atlassian.net",
+                        "jiraId": 10000
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/projects/items",
+                "type": "object",
+                "title": "Items",
+                "description": "",
+                "default": {},
+                "examples": [
+                    {
+                        "key": "sp",
+                        "name": "Sample Project",
+                        "jiraRapidViewId": 15,
+                        "baseUrl": "https://sample.atlassian.net",
+                        "jiraId": 10000
+                    }
+                ],
+                "additionalProperties": true,
+                "required": [
+                    "key",
+                    "name",
+                    "jiraId",
+                    "jiraRapidViewId",
+                    "baseUrl"
+                ],
+                "properties": {
+                    "key": {
+                        "$id": "#/properties/projects/items/properties/key",
+                        "type": "string",
+                        "title": "Key",
+                        "description": "JIRA key that identifies this project. If your issues follow the convention SP-1000, then your key is SP.",
+                        "default": "",
+                        "examples": [
+                            "sp"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/projects/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Name of your project.",
+                        "default": "",
+                        "examples": [
+                            "Sample"
+                        ]
+                    },
+                    "jiraId": {
+                        "$id": "#/properties/projects/items/properties/jiraId",
+                        "type": "integer",
+                        "title": "Jira ID",
+                        "description": "JIRA ID of your project.",
+                        "default": 0,
+                        "examples": [
+                            10500
+                        ]
+                    },
+                    "jiraRapidViewId": {
+                        "$id": "#/properties/projects/items/properties/jiraRapidViewId",
+                        "type": "integer",
+                        "title": "JIRA Rapid View ID",
+                        "description": "JIRA Rapid View ID of your project. Used to access Backlog and Active Sprints view.",
+                        "default": 0,
+                        "examples": [
+                            15
+                        ]
+                    },
+                    "baseUrl": {
+                        "$id": "#/properties/projects/items/properties/baseUrl",
+                        "type": "string",
+                        "title": "Base URL",
+                        "description": "URL to your JIRA instance, without trailing slashes.",
+                        "default": "",
+                        "examples": [
+                            "https://sample.atlassian.net"
+                        ]
+                    }
+                }
+            }
+        },
+        "people": {
+            "$id": "#/properties/people",
+            "type": "array",
+            "title": "People",
+            "description": "Your team members.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "triggers": [
+                            "anna"
+                        ],
+                        "jiraId": "5d92f3a91d47a50c34d4c073",
+                        "key": "tom",
+                        "name": "Tomasz"
+                    },
+                    {
+                        "key": "antek",
+                        "name": "Antek",
+                        "jiraId": "5a299213301ed0381f22a9a1"
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/people/items",
+                "type": "object",
+                "title": "Items",
+                "description": "",
+                "default": {},
+                "examples": [
+                    {
+                        "triggers": [
+                            "tomek"
+                        ],
+                        "jiraId": "5d92f3a91d47a50c34d4c073",
+                        "key": "tom",
+                        "name": "Tomasz"
+                    },
+                    {
+                        "key": "antek",
+                        "name": "Antek G",
+                        "jiraId": "5a299213301ed0381f22a9a1"
+                    }
+                ],
+                "additionalProperties": true,
+                "required": [
+                    "key",
+                    "name",
+                    "jiraId"
+                ],
+                "properties": {
+                    "key": {
+                        "$id": "#/properties/people/items/properties/key",
+                        "type": "string",
+                        "title": "Key",
+                        "description": "Internal key used to identify this person.",
+                        "default": "",
+                        "examples": [
+                            "antek"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/people/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Person's name.",
+                        "default": "",
+                        "examples": [
+                            "Antek G"
+                        ]
+                    },
+                    "triggers": {
+                        "$id": "#/properties/people/items/properties/triggers",
+                        "type": "array",
+                        "title": "Triggers",
+                        "description": "Extra triggers for this person e.g. nicknames, abbreviations. Key is also used in search here.",
+                        "default": [],
+                        "examples": [
+                            [
+                                "anti",
+                                "anton"
+                            ]
+                        ],
+                        "additionalItems": true,
+                        "items": {
+                            "$id": "#/properties/people/items/properties/triggers/items",
+                            "type": "string",
+                            "title": "Items",
+                            "description": "",
+                            "default": "",
+                            "examples": [
+                                "anti",
+                                "anton"
+                            ]
+                        }
+                    },
+                    "jiraId": {
+                        "$id": "#/properties/projects/items/properties/jiraId",
+                        "type": "string",
+                        "title": "Jira ID",
+                        "description": "JIRA ID of this person",
+                        "default": "",
+                        "examples": [
+                            "5d92f3a91d47a50c34d4c073"
+                        ]
+                    }
+                }
+            }
+        },
+        "custom": {
+            "$id": "#/properties/custom",
+            "type": "array",
+            "title": "Custom triggers",
+            "description": "Add custom triggers for any URL.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "triggers": [
+                            "jenkins",
+                            "build"
+                        ],
+                        "url": "http://jenkins.com",
+                        "key": "jenkins",
+                        "name": "Jenkins"
+                    },
+                    {
+                        "url": "http://google.com",
+                        "key": "google",
+                        "name": "Google",
+                        "triggers": [
+                            "search",
+                            "google"
+                        ]
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/custom/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": {},
+                "examples": [
+                    {
+                        "triggers": [
+                            "jenkins",
+                            "build"
+                        ],
+                        "url": "http://jenkins.com",
+                        "key": "jenkins",
+                        "name": "Jenkins"
+                    },
+                    {
+                        "url": "http://google.com",
+                        "key": "google",
+                        "name": "Google",
+                        "triggers": [
+                            "google",
+                            "search"
+                        ]
+                    }
+                ],
+                "additionalProperties": true,
+                "required": [
+                    "key",
+                    "name",
+                    "triggers",
+                    "url"
+                ],
+                "properties": {
+                    "key": {
+                        "$id": "#/properties/people/items/properties/key",
+                        "type": "string",
+                        "title": "Key",
+                        "description": "Internal key used to identify this url.",
+                        "default": "",
+                        "examples": [
+                            "jenkins"
+                        ]
+                    },
+                    "name": {
+                        "$id": "#/properties/custom/items/properties/name",
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Display name for url.",
+                        "default": "",
+                        "examples": [
+                            "Jenkins"
+                        ]
+                    },
+                    "triggers": {
+                        "$id": "#/properties/custom/items/properties/triggers",
+                        "type": "array",
+                        "title": "Triggers",
+                        "description": "Triggers for this url e.g. names, abbreviations. Key is *not* used by default here.",
+                        "default": [],
+                        "examples": [
+                            [
+                                "jenkins",
+                                "build"
+                            ]
+                        ],
+                        "additionalItems": true,
+                        "items": {
+                            "$id": "#/properties/custom/items/properties/triggers/items",
+                            "type": "string",
+                            "title": "Items",
+                            "description": "",
+                            "default": "",
+                            "examples": [
+                                "jenkins",
+                                "build"
+                            ]
+                        }
+                    },
+                    "url": {
+                        "$id": "#/properties/custom/items/properties/url",
+                        "type": "string",
+                        "title": "Url",
+                        "description": "Specifies where to route when the trigger is hit.",
+                        "default": "",
+                        "examples": [
+                            "http://jenkins.com"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
