@@ -1,6 +1,6 @@
 {
   "name": "pm-cli",
-  "version": "0.2",
+  "version": "0.2.0",
   "description": "Spotlight-like Jira search for MacOS",
   "main": "main.js",
   "scripts": {
@@ -30,6 +30,7 @@
   },
   "build": {
     "appId": "pm-cli",
+    "dmg": {
       "contents": [
         {
           "x": 110,
@@ -42,6 +43,10 @@
           "path": "/Applications"
         }
       ]
-    }
+    },
+    "extraResources": [
+      "./assets/**",
+      "./schema.json"
+    ]
   }
 }

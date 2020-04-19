@@ -7,6 +7,10 @@ const Store = require('electron-store');
 
 const DEBUG = false;
 
+function getAssetPath(assetPath) {
+  return app.isPackaged ? path.join(process.resourcesPath, assetPath) : assetPath;
+}
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1000,
@@ -36,8 +40,7 @@ app.on('ready', () => {
 })
 
 function createConfig() {
-  let schema = JSON.parse(fs.readFileSync('schema.json', 'utf8'));
-  
+  let schema = JSON.parse(fs.readFileSync(getAssetPath('schema.json'), 'utf8'));
   try {
     global.config = new Store(
       {
@@ -58,7 +61,7 @@ function openConfig() {
 }
 
 function createTray() {
-  tray = new Tray('jira-spotlightTemplate.png')
+  tray = new Tray(getAssetPath('assets/jira-spotlightTemplate.png'))
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Open (⌃+⌘+Space)', sublabel: '', type: 'normal', click: createWindow },
     { label: 'Settings', type: 'normal', click: openConfig },
