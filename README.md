@@ -1,6 +1,6 @@
 # pm-cli
 
-Spotlight-like Jira launcher for MacOS.
+Spotlight-like Jira launcher for MacOS. Built using Electron and VanillaJS.
 
 ![pm-cli demo](demo.gif)
 
