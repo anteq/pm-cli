@@ -4,9 +4,9 @@ Spotlight-like Jira search for MacOS.
 
 ```bash
 # Clone this repository
-git clone https://github.com/anteq/jira-spotlight
+git clone https://github.com/anteq/pm-cli
 # Go into the repository
-cd jira-spotlight
+cd pm-cli
 # Install dependencies
 npm install
 # Run the app
