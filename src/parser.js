@@ -25,7 +25,7 @@ function pushTriggerRegexps(action, context, replacement, regexps) {
     for (let trigger of action.triggers) {
         var regexObject = {
             action,
-            regexp: new RegExp(trigger.replace(`{${action.context}}`, replacement) + '(.*)', 'i')
+            regexp: new RegExp('^' + trigger.replace(`{${action.context}}`, replacement) + '(.*)', 'i')
         };
         regexObject[action.context] = context;
         regexps.push(regexObject);

@@ -21,6 +21,7 @@ function resolveAdd(context, value) {
         findAssignee(arguments.properties),
         findPriority(arguments.properties),
         findIssueType(arguments.properties),
+        ...findLink(arguments.properties),
         findSummary(arguments.summary)
     ].filter(x => !!x);
     return {
@@ -39,12 +40,14 @@ function buildText(props) {
     let project = props.find(x => x.key === 'project');
     let assignee = props.find(x => x.key === 'assignee');
     let priority = props.find(x => x.key === 'priority');
-    return wrap(`Create new ${priority && priority.name !== 'Major' ? '{priority}' : ''} {issuetype} in {project} ${assignee ? 'for {assignee}' : ''}`,
-    { issuetype: issuetype.name, project: project.name, priority: priority.name, assignee: assignee ? assignee.name : null });
+    let link = props.find(x => x.key === 'link-issue');
+    return wrap(`Create new {issuetype} in {project} ${assignee ? 'for {assignee}' : ''} ${link ? ' 🔗{link}' : ''}`,
+    { issuetype: issuetype.name, project: project.name, priority: priority.name, assignee: assignee ? assignee.name : null, link: link ? link.name : null });
 }
 
-function parseArguments(input) {
+function parseArguments(_input) {
     var properties, summary;
+    let input = _input.replace("link ", "link=");
     const summaryRegex = /\"(.*)\"/gim;
     const match = input.match(summaryRegex);
     if (match) {
@@ -84,6 +87,25 @@ function findSummary(summary) {
         value: formatted,
         name: formatted
     } : null;
+}
+
+function findLink(inputs) {
+    let possibleLinks = inputs.filter(x => x.startsWith("link="));
+    if (possibleLinks.length) {
+        let link = possibleLinks[0].slice(5);
+        return [{
+            key: 'link-issue',
+            jiraKey: 'issuelinks-issues',
+            value: link,
+            name: link.toUpperCase()
+        }, {
+            key: 'link-type',
+            jiraKey: 'issuelinks-linktype',
+            value: 'described in',
+            name: 'Described in'
+        }];
+    }
+    return [];
 }
 
 function findAssignee(inputs) {
