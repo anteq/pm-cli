@@ -42,7 +42,7 @@ function buildText(props) {
     let priority = props.find(x => x.key === 'priority');
     let link = props.find(x => x.key === 'link-issue');
     return wrap(`Create new {issuetype} in {project} ${assignee ? 'for {assignee}' : ''} ${link ? ' 🔗{link}' : ''}`,
-    { issuetype: issuetype.name, project: project.name, priority: priority.name, assignee: assignee ? assignee.name : null, link: link ? link.name : null });
+    { issuetype: issuetype.name, project: project.name, priority: priority.name, assignee: assignee ? assignee.name : null, link: link ? link.name.toUpperCase() : null });
 }
 
 function parseArguments(_input) {

@@ -39,7 +39,7 @@ function parseInput(input) {
         if (match) {
             // console.debug(match);
             const index = match[1] === "" ? match[0].length : input.indexOf(match[1]);
-            let result = action.action.resolve(action, input.slice(index).toLowerCase().trim());
+            let result = action.action.resolve(action, input.slice(index).trim());
             return result;
         }
     }
