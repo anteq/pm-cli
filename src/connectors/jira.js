@@ -11,14 +11,14 @@ const options = {
 function getIssue(context, issue) {
     const url = `${context.project.baseUrl}/rest/api/2/issue/${issue}`;
     return get(url).then(response => {
-        return buildIssue(response);
+        return buildIssue(response, context.project.baseUrl);
     });
 }
 
 function searchIssues(context, jql) {
     const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
     return get(url).then(response => {
-        return response.issues.map(r => buildIssue(r));
+        return response.issues.map(r => buildIssue(r, context.project.baseUrl));
     });
 }
 
@@ -42,9 +42,11 @@ function post(url, body, error, success) {
     });
 }
 
-function buildIssue(response) {
+function buildIssue(response, baseUrl) {
     if (!response.fields) return null;
+    console.debug(response);
     return {
+        url: `${baseUrl}/browse/${response.key}`,
         key: response.key,
         issueType: buildIssueType(response.fields),
         priority: buildPriority(response.fields),

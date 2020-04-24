@@ -1,4 +1,5 @@
 const path = require('path');
+const { shell } = require('electron');
 const fs = require('fs');
 
 const config = {
@@ -25,6 +26,7 @@ function createIssueHTML(template, data) {
     let issue = template.cloneNode(true);
     issue.removeAttribute('id');
     issue.classList.remove('hide');
+    issue.dataset.url = data.url;
     issue.querySelector('.issue__icon--priority').setAttribute('src', data.priority.icon);
     issue.querySelector('.issue__icon--issuetype').setAttribute('src', data.issueType.icon);
     issue.querySelector('.issue__content--key').innerHTML = data.key ? data.key : '-';
@@ -32,5 +34,8 @@ function createIssueHTML(template, data) {
     // issue.querySelector('.issue__content--status').innerHTML = data.status.name;
     issue.querySelector('.issue__content--assignee').innerHTML = data.assignee ? data.assignee.name : '-';
     issue.querySelector('.issue__content--sprint').innerHTML = data.sprint ? data.sprint.name : '-';
+    issue.addEventListener('click', () => {
+        shell.openExternal(data.url, { activate: true });
+    });
     return issue;
   }
