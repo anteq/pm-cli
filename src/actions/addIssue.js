@@ -32,7 +32,7 @@ function resolveAdd(context, value) {
 }
 
 function buildUrl(props, context) {
-    return `${context.project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.length ? props.map(x => `${x.jiraKey}=${x.value}`).join('&') : ''}`
+    return `${context.project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.length ? props.map(x => `${x.jiraKey}=${x.value}`).join('&') : ''}`;
 }
 
 function buildText(props) {
@@ -96,7 +96,7 @@ function findLink(inputs) {
         return [{
             key: 'link-issue',
             jiraKey: 'issuelinks-issues',
-            value: link,
+            value: link.toUpperCase(),
             name: link.toUpperCase()
         }, {
             key: 'link-type',
