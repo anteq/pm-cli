@@ -10,23 +10,31 @@ function main() {
     }
   });
   window.addEventListener('keyup', (e) => {
-    parseInput(document.querySelector('.input-search').value).then(result => {
-      if (result) {
-        document.querySelector('.content').classList.remove('hide-main');
-        if (result.issues) {
-          document.querySelector('.hero-layout').classList.add('hide');
-          document.querySelector('.column-layout').classList.remove('hide');
-          document.querySelector('.column-layout__left').innerHTML = '';
-          document.querySelector('.column-layout__right').innerHTML = '';
-          for (let issue of result.issues) {
-            document.querySelector('.column-layout__left').appendChild(createIssueHTML(issue));
+    parseInput(document.querySelector('.input-search').value).then(r => {
+      if (r) {
+        let { result, input } = r;
+        if (document.querySelector('.input-search').value !== input) return;
+        if (result.action.layout) {
+          document.querySelector('.content').classList.remove('hide-main');
+          if (result.action.layout === 'hero') {
+            document.querySelector('.hero-layout').classList.remove('hide');
+            document.querySelector('.column-layout').classList.add('hide');
+            if (result.text) {
+              document.querySelector('.hero-layout__description').innerHTML = result ? result.text : '';
+              document.querySelector('.hero-layout__icon').innerHTML = result ? result.action.icon : '';
+            }
+          } else if (result.action.layout === 'list') {
+            document.querySelector('.hero-layout').classList.add('hide');
+            document.querySelector('.column-layout').classList.remove('hide');
+            if (result.issues) {
+              document.querySelector('.column-layout__left').innerHTML = '';
+              document.querySelector('.column-layout__right').innerHTML = '';
+              for (let issue of result.issues) {
+                document.querySelector('.column-layout__left').appendChild(createIssueHTML(issue));
+              }
+            }
           }
-        } else {
-          document.querySelector('.hero-layout').classList.remove('hide');
-          document.querySelector('.column-layout').classList.add('hide');
-          document.querySelector('.hero-layout__description').innerHTML = result ? result.text : '';
-          document.querySelector('.hero-layout__icon').innerHTML = result ? result.icon : '';
-        }
+        } 
       } else {
         document.querySelector('.content').classList.add('hide-main');
       }

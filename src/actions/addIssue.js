@@ -9,6 +9,7 @@ const config = {
     context: 'project',
     triggers: ['{project} new', '{project} create', '{project} add'],
     arguments: true,
+    layout: 'hero',
     resolve: resolveAdd
 };
 module.exports = config;
@@ -27,7 +28,7 @@ function resolveAdd(context, value) {
     return {
         url: buildUrl(props, context),
         text: buildText(props),
-        icon: config.icon
+        action: config
     };
 }
 

@@ -8,6 +8,7 @@ const config = {
     context: 'project',
     triggers: ['{project}-'],
     arguments: true,
+    layout: 'list',
     resolve: resolveOpen
 };
 module.exports = config;
@@ -27,6 +28,6 @@ async function resolveOpen(context, value) {
         url: `${context.project.baseUrl}/browse/${issue}`,
         text: wrap(`Open {issue}`, {issue}),
         issues: [data],
-        icon: config.icon
+        action: config
     };
 }

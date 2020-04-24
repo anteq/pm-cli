@@ -40,7 +40,7 @@ async function parseInput(input) {
             // console.debug(match);
             const index = match[1] === "" ? match[0].length : input.indexOf(match[1]);
             let result = await action.action.resolve(action, input.slice(index).trim());
-            return result;
+            return { result, input };
         }
     }
 }
