@@ -20,7 +20,9 @@ function main() {
           let layout = layouts.find(x => x.key === result.action.layout)
           document.querySelector('.main').innerHTML = '';
           document.querySelector('.main').appendChild(layout.resolve(result.content));
-        } 
+        } else {
+          document.querySelector('.content').classList.add('hide-main');
+        }
       } else {
         document.querySelector('.content').classList.add('hide-main');
       }
