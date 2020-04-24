@@ -7,7 +7,7 @@ const config = {
     context: 'project',
     triggers: ['{project}'],
     arguments: false,
-    layout: 'list',
+    layout: 'hero',
     resolve: resolveOpen
 };
 module.exports = config;
@@ -15,7 +15,10 @@ module.exports = config;
 function resolveOpen(context, value) {
     return {
         url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}`,
-        text: wrap(`Open {project}`, {project: context.project.key.toUpperCase()}),
-        action: config
+        action: config,
+        content: {
+            text: wrap(`Open {project}`, {project: context.project.key.toUpperCase()}),
+            icon: config.icon
+        }
     };
 }

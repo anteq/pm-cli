@@ -26,8 +26,10 @@ async function resolveOpen(context, value) {
     );
     return {
         url: `${context.project.baseUrl}/browse/${issue}`,
-        text: wrap(`Open {issue}`, {issue}),
-        issues: [data],
-        action: config
+        action: config,
+        content: {
+            text: wrap(`Open {issue}`, {issue}),
+            items: [data]
+        }        
     };
 }

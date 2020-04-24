@@ -27,8 +27,11 @@ function resolveAdd(context, value) {
     ].filter(x => !!x);
     return {
         url: buildUrl(props, context),
-        text: buildText(props),
-        action: config
+        action: config,
+        content: {
+            icon: config.icon,
+            text: buildText(props)
+        }
     };
 }
 

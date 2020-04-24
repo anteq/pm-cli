@@ -24,9 +24,11 @@ async function resolveSearch(context, value) {
     );
     return {
         url: createSearchUrl(context, value),
-        text: wrap(`Search ${value ? 'for {search}': ''} within {project}`, { search: value, project: context.project.key.toUpperCase() }),
         action: config,
-        issues: data
+        content: {
+            items: data,
+            text: wrap(`Search ${value ? 'for {search}': ''} within {project}`, { search: value, project: context.project.key.toUpperCase() }),
+        }
     };
 }
 

@@ -15,7 +15,10 @@ module.exports = config;
 function resolveBacklog(context, value) {
     return {
         url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}&view=planning`,
-        text: wrap(`Go to {project} Backlog`, { project: context.project.key.toUpperCase() }),
-        action: config
+        action: config,
+        content: {
+            icon: config.icon,
+            text: wrap(`Go to {project} Backlog`, { project: context.project.key.toUpperCase() }),
+        }
     };
 }
