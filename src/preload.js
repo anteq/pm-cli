@@ -10,19 +10,47 @@ function main() {
     }
   });
   window.addEventListener('keyup', (e) => {
-    result = parseInput(document.querySelector('.input-search').value);
-    if (result) {
-      document.querySelector('.content').classList.remove('hide-main');
-    } else {
-      document.querySelector('.content').classList.add('hide-main');
-    }
-    document.querySelector('.big-content__description').innerHTML = result ? result.text : '';
-    document.querySelector('.big-content__icon').innerHTML = result ? result.icon : '';
+    parseInput(document.querySelector('.input-search').value).then(result => {
+      if (result) {
+        document.querySelector('.content').classList.remove('hide-main');
+        if (result.issues) {
+          document.querySelector('.hero-layout').classList.add('hide');
+          document.querySelector('.column-layout').classList.remove('hide');
+          document.querySelector('.column-layout__left').innerHTML = '';
+          document.querySelector('.column-layout__right').innerHTML = '';
+          for (let issue of result.issues) {
+            document.querySelector('.column-layout__left').appendChild(createIssueHTML(issue));
+          }
+        } else {
+          document.querySelector('.hero-layout').classList.remove('hide');
+          document.querySelector('.column-layout').classList.add('hide');
+          document.querySelector('.hero-layout__description').innerHTML = result ? result.text : '';
+          document.querySelector('.hero-layout__icon').innerHTML = result ? result.icon : '';
+        }
+      } else {
+        document.querySelector('.content').classList.add('hide-main');
+      }
+    });
   });
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && result && result.url) shell.openExternal(result.url, { activate: true });
     if (e.keyCode == '27') remote.getCurrentWindow().close();
   });
 };
+
+function createIssueHTML(data) {
+  if (!data) return null;
+  let issue = document.querySelector('#issue-template').cloneNode(true);
+  issue.removeAttribute('id');
+  issue.classList.remove('hide');
+  issue.querySelector('.issue__icon--priority').setAttribute('src', data.priority.icon);
+  issue.querySelector('.issue__icon--issuetype').setAttribute('src', data.issueType.icon);
+  issue.querySelector('.issue__content--key').innerHTML = data.key ? data.key : '-';
+  issue.querySelector('.issue__content--summary').innerHTML = data.summary ? data.summary : '-';
+  // issue.querySelector('.issue__content--status').innerHTML = data.status.name;
+  issue.querySelector('.issue__content--assignee').innerHTML = data.assignee ? data.assignee.name : '-';
+  issue.querySelector('.issue__content--sprint').innerHTML = data.sprint ? data.sprint.name : '-';
+  return issue;
+}
 
 main();

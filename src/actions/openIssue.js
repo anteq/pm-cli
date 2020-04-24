@@ -12,12 +12,13 @@ const config = {
 };
 module.exports = config;
 
-function resolveOpen(context, value) {
+async function resolveOpen(context, value) {
     const no = parseInt(value);
     const issue = context.project.key.toUpperCase() + (isNaN(no) ? '' : `-${no}`)
-    jira.getIssue(context, issue).then(
+    let data;
+    await jira.getIssue(context, issue).then(
         (result) => {
-            console.debug(result)
+            data = result;
         }, (error) => {
             console.error('err', error);
         }
@@ -25,6 +26,7 @@ function resolveOpen(context, value) {
     return {
         url: `${context.project.baseUrl}/browse/${issue}`,
         text: wrap(`Open {issue}`, {issue}),
+        issues: [data],
         icon: config.icon
     };
 }

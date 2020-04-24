@@ -66,7 +66,7 @@ body {
 
 .main {
     overflow: hidden;
-    width: 650px;
+    width: 610px;
     background-color: #f8f5f4;
     height: 400px;
     transition: display 2s;
@@ -74,6 +74,7 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.2);
     outline: none;
     box-shadow: 0 25px 60px 10px rgba(0, 0, 0, 0.3);
+    padding: 4px 20px;
 }
 
 .hide-main .main {
@@ -85,27 +86,107 @@ body {
     color: #ffffff;
 }
 
-.big-content {
+/* hero layout */
+
+.hero-layout {
     font-size: 1.6rem;
     color: #aaa;
-    padding: 4px 20px;
     margin: auto;
     position: relative;
 }
 
-.big-content__description {
+.hero-layout__description {
     padding-right: 150px;
 }
 
-.big-content__icon {
+.hero-layout__icon {
     position: absolute;
     font-size: 6rem;
     top: 30px;
     right: 32px;
 }
 
+/* column layout */
+
+.column-layout {
+    margin: auto;
+    position: relative;
+    height: 100%;
+}
+
+.column-layout__left {
+    width: 60%;
+    height: 100%;
+    border-right: 1px rgba(0, 0, 0, 0.2) solid;
+}
+
+.column-layout__right {
+    width: 40%;
+    height: 100%;
+}
+
+/* issue */
+
+.issue {
+    display: flex;
+    margin-left: -24px;
+    padding-left: 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.issue:hover {
+    background-color: #eee;
+}
+
+.dark .issue:hover {
+    background-color: gray;
+}
+
+.issue__left {
+    width: 30px;
+}
+
+.issue__icon {
+    height: 10px;
+    width: 10px;
+}
+
+.issue__avatar {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+
+.issue__content--main {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.issue__content--sub {
+    font-size: 11px;
+    color: rgb(137, 147, 164);
+    font-style: normal; 
+}
+
+.issue__content--status {
+    text-transform: upper-case;
+    font-size: 10px;
+    background-color: lightblue;
+    border-radius: 15%;
+    padding: 3px 6px;
+    letter-spacing: 0.03rem;
+    margin-bottom: 10px;
+    margin-left: 4px;
+}
+
 
 /* styles */
+
+.hide {
+    display: none;
+}
 
 .prop {
     font-weight: 600;
