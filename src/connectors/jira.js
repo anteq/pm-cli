@@ -9,16 +9,24 @@ const options = {
 };
 
 function getIssue(context, issue) {
-    const url = `${context.project.baseUrl}/rest/api/2/issue/${issue}`
-    console.debug(url);
+    const url = `${context.project.baseUrl}/rest/api/2/issue/${issue}`;
     return get(url).then(response => {
         return buildIssue(response);
     });
 }
 
+function searchIssues(context, jql) {
+    const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
+    return get(url).then(response => {
+        return response.issues.map(r => buildIssue(r));
+    });
+}
+
+let getRequest;
 function get(url) {
+    if (getRequest) getRequest.abort();
     return new Promise((resolve, reject) => {
-        request.get({ ...options, url }, (err, res, data) => {
+        getRequest = request.get({ ...options, url }, (err, res, data) => {
             if (err) reject(err)
             else resolve(data);
         })
@@ -72,9 +80,9 @@ function buildStatus(fields) {
 
 function buildAssignee(fields) {
     return {
-        name: fields.assignee.displayName,
-        id: fields.assignee.accountId,
-        img: fields.assignee.avatarUrls['48x48']
+        name: fields.assignee ? fields.assignee.displayName : 'Unassigned',
+        id: fields.assignee ? fields.assignee.accountId : null,
+        img: fields.assignee ? fields.assignee.avatarUrls['48x48'] : null
     };
 }
 
@@ -119,4 +127,4 @@ function buildLink(link) {
     };
 }
 
-module.exports = { getIssue };
+module.exports = { getIssue, searchIssues };

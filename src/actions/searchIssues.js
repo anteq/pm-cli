@@ -1,4 +1,5 @@
 const { wrap } = require('../wrap');
+const jira = require('../connectors/jira');
 
 const config = {
     key: 'searchIssues',
@@ -11,15 +12,27 @@ const config = {
 };
 module.exports = config;
 
-function resolveSearch(context, value) {
+async function resolveSearch(context, value) {
+    let data;
+    await jira.searchIssues(context, buildJQL(context, value)).then(
+        (result) => {
+            data = result
+        }, (error) => {
+            console.error('err', error);
+        }
+    );
     return {
         url: createSearchUrl(context, value),
         text: wrap(`Search ${value ? 'for {search}': ''} within {project}`, { search: value, project: context.project.key.toUpperCase() }),
-        icon: config.icon
+        icon: config.icon,
+        issues: data
     };
 }
 
+function buildJQL(context, value) {
+    return `project = ${context.project.key.toUpperCase()} ${ value ? 'and text ~"' + value + '\"' : ''} order by created desc`;
+}
+
 function createSearchUrl(context, value) {
-    var searchString = `project = ${context.project.key.toUpperCase()} ${ value ? 'and text ~"' + value + '\"' : ''} order by created desc`;
-    return `${context.project.baseUrl}/issues/?jql=${escape(searchString)}`;
+    return `${context.project.baseUrl}/issues/?jql=${escape(buildJQL(context, value))}`;
 }
