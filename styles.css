@@ -118,11 +118,13 @@ body {
     width: 60%;
     height: 100%;
     border-right: 1px rgba(0, 0, 0, 0.2) solid;
+    float: left;
 }
 
 .column-layout__right {
-    width: 40%;
+    float: left;
     height: 100%;
+    padding-left: 10px;
 }
 
 /* issue */
@@ -134,6 +136,10 @@ body {
     padding-top: 4px;
     padding-bottom: 4px;
     cursor: pointer;
+}
+
+.issue.selected {
+    text-decoration: underline;
 }
 
 .issue:hover {

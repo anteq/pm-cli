@@ -9,7 +9,9 @@ let state = {
   content: {},
 
   actionConfig: {},
-  layoutConfig: {}
+  layoutConfig: {},
+
+  drawLayout
 };
 
 function onInit(e) {
@@ -40,10 +42,9 @@ function onKeyDown(e) {
 
 function drawLayout() {
   if (state.actionConfig && typeof state.actionConfig.layout !== 'undefined') {
-    console.debug('elo');
     ui.content.classList.remove('hide-main');
     state.layoutConfig = layouts.find(x => x.key === state.actionConfig.layout)
-    ui.drawMain(state.layoutConfig.resolve(state.content));
+    ui.drawMain(state.layoutConfig.resolve(state));
   } else {
     ui.content.classList.add('hide-main');
   }
