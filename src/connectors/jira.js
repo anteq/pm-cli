@@ -22,6 +22,13 @@ function searchIssues(context, jql) {
     });
 }
 
+function getGithubInfo(context, issueId) {
+    const url = `${context.project.baseUrl}/rest/dev-status/latest/issue/detail?issueId=${issueId}&applicationType=GitHub&dataType=branch`;
+    return get(url).then(response => {
+        return buildGithubInfo(response);
+    });
+}
+
 let getRequest;
 function get(url) {
     if (getRequest) getRequest.abort();
@@ -42,12 +49,50 @@ function post(url, body, error, success) {
     });
 }
 
+function buildGithubInfo(response) {
+    if (!response.detail[0]) return null;
+    return {
+        branches: buildBranches(response.detail[0]),
+        prs: buildPrs(response.detail[0])
+    }
+}
+
+function buildBranches(detail) {
+    return detail.branches.map(x => {
+        return {
+            name: x.name,
+            url: x.url,
+            repository: x.repository.name,
+            lastModified: x.lastCommit.authorTimestamp,
+            lastCommit: {
+                id: x.lastCommit.id,
+                author: x.lastCommit.author.name,
+                url: x.lastCommit.url
+            }
+        };
+    });
+}
+
+function buildPrs(detail) {
+    return detail.pullRequests.map(x => {
+        return {
+            author: x.author.name,
+            id: x.id,
+            name: x.name,
+            url: x.url,
+            lastUpdate: x.lastUpdate,
+            status: x.status
+        };
+    });
+}
+
 function buildIssue(response, baseUrl) {
     if (!response.fields) return null;
     console.debug(response);
     return {
         url: `${baseUrl}/browse/${response.key}`,
         key: response.key,
+        id: response.id,
         issueType: buildIssueType(response.fields),
         priority: buildPriority(response.fields),
         status: buildStatus(response.fields),
@@ -129,4 +174,4 @@ function buildLink(link) {
     };
 }
 
-module.exports = { getIssue, searchIssues };
+module.exports = { getIssue, searchIssues, getGithubInfo };

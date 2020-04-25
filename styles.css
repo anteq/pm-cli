@@ -138,16 +138,22 @@ body {
     cursor: pointer;
 }
 
-.issue.selected {
-    text-decoration: underline;
-}
-
 .issue:hover {
     background-color: #eee;
 }
 
+.issue.selected {
+    background-color: #eee;
+    color: black;
+}
+
 .dark .issue:hover {
     background-color: gray;
+}
+
+.dark .issue.selected {
+    background-color: darkslategray;
+    color: white !important;
 }
 
 .issue__left {

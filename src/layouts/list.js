@@ -27,9 +27,12 @@ function onKeyDown(state, e) {
 function getDetails(state, issue) {
     setTimeout(() => {
         // todo fix base url - get from config
-        jira.getIssue({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue).then((result) => { 
+        jira.getIssue({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.key).then((result) => { 
             state.content.details = result;
             state.drawLayout();
+        });
+        jira.getGithubInfo({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.id).then(result => {
+            console.debug(result);
         });
     })
 }
@@ -41,7 +44,7 @@ function resolveList(state, _selectedIndex) {
     let doc = parser.parseFromString(config.template, 'text/html');
     if (!state.content.details) {
         state.content.selectedIndex = selectedIndex;
-        getDetails(state, state.content.items[state.content.selectedIndex].key);
+        getDetails(state, state.content.items[state.content.selectedIndex]);
     }
     if (state.content.items) {
         let issueTemplate = doc.querySelector('#issue-template');
