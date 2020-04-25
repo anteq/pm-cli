@@ -21,9 +21,11 @@ function onInit(e) {
 }
 
 async function onKeyUp(e) {
-  state.value = ui.input.value;
-  await parseInput();
-  drawLayout();
+  if (state.value !== ui.input.value) {
+    state.value = ui.input.value;
+    await parseInput();
+    drawLayout();
+  }
 }
 
 async function parseInput() {
@@ -38,13 +40,14 @@ async function parseInput() {
 function onKeyDown(e) {
   if (e.key === 'Enter' && result && result.url) shell.openExternal(result.url, { activate: true });
   if (e.keyCode == '27') remote.getCurrentWindow().close();
+  if (state.layoutConfig && state.layoutConfig.onKeyDown) state.layoutConfig.onKeyDown(state, e);
 }
 
 function drawLayout() {
   if (state.actionConfig && typeof state.actionConfig.layout !== 'undefined') {
     ui.content.classList.remove('hide-main');
     state.layoutConfig = layouts.find(x => x.key === state.actionConfig.layout)
-    ui.drawMain(state.layoutConfig.resolve(state));
+    ui.drawMain(state.layoutConfig.resolve(state, state.content.selectedIndex));
   } else {
     ui.content.classList.add('hide-main');
   }

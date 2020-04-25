@@ -6,9 +6,23 @@ const jira = require('../connectors/jira');
 const config = {
     key: 'list',
     template: fs.readFileSync('src/layouts/list.html', 'utf8'),
+    onKeyDown: onKeyDown,
     resolve: resolveList
 };
 module.exports = config;
+
+function onKeyDown(state, e) {
+    if (e.keyCode == '38') {
+        state.content.selectedIndex -= 1;
+        state.content.details = null;
+        state.drawLayout();
+    }
+    else if (e.keyCode == '40') {
+        state.content.selectedIndex += 1;
+        state.content.details = null;
+        state.drawLayout();
+    }
+}
 
 function getDetails(state, issue) {
     setTimeout(() => {
@@ -24,7 +38,7 @@ function resolveList(state, _selectedIndex) {
     let parser = new DOMParser();
     let selectedIndex = _selectedIndex || 0;
     let doc = parser.parseFromString(config.template, 'text/html');
-    if (state.content.selectedIndex !== selectedIndex ) {
+    if (!state.content.details) {
         state.content.selectedIndex = selectedIndex;
         getDetails(state, state.content.items[state.content.selectedIndex].key);
     }
