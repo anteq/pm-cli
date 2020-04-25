@@ -1,7 +1,7 @@
 const { actions } = require('./actions');
 const { custom, projects } = require('./config');
 
-module.exports = { parseInput };
+module.exports = { parse };
 
 function configureSearch() {
     var regexps = [];
@@ -32,7 +32,7 @@ function pushTriggerRegexps(action, context, replacement, regexps) {
     }
 }
 
-async function parseInput(input) {
+async function parse(input) {
     let search = configureSearch();
     for (let action of search) {
         const match = input.match(action.regexp);
@@ -43,4 +43,5 @@ async function parseInput(input) {
             return { result, input };
         }
     }
+    return { result: null, input };
 }
