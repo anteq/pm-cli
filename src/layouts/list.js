@@ -26,7 +26,8 @@ function onKeyDown(state, e) {
 
 function getDetails(state, issue) {
     setTimeout(() => {
-        jira.getIssue({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue).then((result) => {
+        // todo fix base url - get from config
+        jira.getIssue({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue).then((result) => { 
             state.content.details = result;
             state.drawLayout();
         });

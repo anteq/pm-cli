@@ -23,6 +23,7 @@ function onInit(e) {
 async function onKeyUp(e) {
   if (state.value !== ui.input.value) {
     state.value = ui.input.value;
+    // todo - separate parse input from getting initial info about action
     await parseInput();
     drawLayout();
   }
