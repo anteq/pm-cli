@@ -125,6 +125,7 @@ body {
     float: left;
     height: 100%;
     padding-left: 10px;
+    padding-top: -5px;
     max-width: 38%;
 }
 
@@ -166,24 +167,6 @@ body {
     width: 10px;
 }
 
-.issue__avatar {
-    height: 24px;
-    width: 24px;
-    border-radius: 50%;
-}
-
-.issue__content--main {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: normal;
-}
-
-.issue__content--sub {
-    font-size: 11px;
-    color: rgb(137, 147, 164);
-    font-style: normal; 
-}
-
 .issue__content--status {
     text-transform: upper-case;
     font-size: 10px;
@@ -195,8 +178,97 @@ body {
     margin-left: 4px;
 }
 
+/* details */
+
+.details {
+    border-bottom:  1px rgba(0, 0, 0, 0.2) solid;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.details__summary {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.details__summary--linked-key {
+    font-weight: normal;
+    font-size: 10px;
+}
+
+.details__summary--linked-key::after {
+    content: ' 🔗';
+    font-size: 8px;
+    vertical-align: middle;
+}
+
+.details__title {
+    font-size: 14px;
+}
+
+.issue__icon--big {
+    height: 14px;
+    width: 14px;
+}
+
+.issue__avatar {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+
+.pr {
+    background-color: rgba(0, 0, 255, 0.02);
+    border: 1px rgba(0, 0, 0, 0.2) solid;;
+    border-radius: 4px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: rgb(137, 147, 164);
+    font-style: normal; 
+}
+
+
+.pr.pr--merged {
+    background-color: rgba(0, 255, 0, 0.02);
+}
+
+.pr.pr--failed {
+    background-color: rgba(255, 0, 0, 0.02);
+}
+
 
 /* styles */
+
+.data {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.data .data__label {
+    font-size: 11px;
+    color: rgb(137, 147, 164);
+    font-style: normal; 
+}
+
+.data .data__value {
+    font-size: 11px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.text-title {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.text-sub {
+    font-size: 11px;
+    color: rgb(137, 147, 164);
+    font-style: normal; 
+}
 
 .hide {
     display: none;

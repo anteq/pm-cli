@@ -71,8 +71,16 @@ function resolveList(state, _selectedIndex) {
             state.content.selectedIndex = selectedIndex;
             getDetails(state, state.content.items[state.content.selectedIndex]);
         }
-        doc.querySelector('.column-layout__right').innerHTML = '';
-        doc.querySelector('.column-layout__right').appendChild(buildDetails(state));
+        if (state.content.details.issue) {
+            doc.querySelector('.column-layout__right').innerHTML = '';
+            doc.querySelector('.column-layout__right').appendChild(buildDetails(state.content.details.issue.data));
+            if (state.content.details.links) {
+                for (let i in state.content.details.links.data) {
+                    doc.querySelector('.column-layout__right').appendChild(buildDetails(state.content.details.links.data[i], state.content.details.issue.data));
+                }
+            }
+        }
+        
     }
     
     console.debug('drawing', state, doc);
