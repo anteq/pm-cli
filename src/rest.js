@@ -1,9 +1,30 @@
 const axios = require('axios');
+const CancelToken = axios.CancelToken;
 
-// todo handle canceling
+class ApiCall {
+    constructor(promise, cancelFunc) {
+        this.promise = promise;
+        this.cancelFunc = cancelFunc;
+    }
+    then(func) {
+        this.promise.then(func);
+    }
+    cancel() {
+        console.debug('cancelled');
+        this.cancelFunc();
+    }
+}
 
-function get(url, headers) {
-    return axios({ headers, method: 'GET', url });
+
+async function get(url, headers) {
+    let cancel;
+    let promise = axios({
+        headers,
+        method: 'GET',
+        url,
+        cancelToken: new CancelToken((c) => { cancel = c; })
+    });
+    return new ApiCall(promise, cancel);
 }
 
 function post(url, headers, body) {
