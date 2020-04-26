@@ -32,8 +32,13 @@ function getDetails(state, issue) {
             state.drawLayout();
         });
         jira.getGithubInfo({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.id).then(result => {
-            console.debug(result);
+            console.debug('gh info', result);
         });
+        if (issue.links) {
+            jira.getIssues({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.links.map(x => x.issue)).then(result => {
+                console.debug('links info', result);
+            });
+        }
     })
 }
 

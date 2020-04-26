@@ -14,6 +14,14 @@ function getIssue(context, issue) {
     });
 }
 
+function getIssues(context, issues) {
+    const jql = issues.map(x => `key = ${x.key}`).join(' OR ');
+    const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}`;
+    return get(url).then(response => {
+        return response.data.issues.map(r => buildIssue(r, context.project.baseUrl));
+    });
+}
+
 function searchIssues(context, jql) {
     const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
     return get(url).then(response => {
@@ -153,4 +161,4 @@ function buildLink(link) {
     };
 }
 
-module.exports = { getIssue, searchIssues, getGithubInfo };
+module.exports = { getIssue, getIssues, searchIssues, getGithubInfo };
