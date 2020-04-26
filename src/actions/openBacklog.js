@@ -12,13 +12,13 @@ const config = {
 };
 module.exports = config;
 
-function resolveBacklog(context, value) {
+function resolveBacklog(state) {
+    const project = state.match.project;
     return {
-        url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}&view=planning`,
-        action: config,
+        url: `${project.baseUrl}/secure/RapidBoard.jspa?rapidView=${project.jiraRapidViewId}&projectKey=${project.key.toUpperCase()}&view=planning`,
         content: {
             icon: config.icon,
-            text: wrap(`Go to {project} Backlog`, { project: context.project.key.toUpperCase() }),
+            text: wrap(`Go to {project} Backlog`, { project: project.key.toUpperCase() }),
         }
     };
 }

@@ -8,7 +8,7 @@ let state = {
   url: null,
   content: {},
 
-  action: {},
+  match: {},
   layoutConfig: {},
 
   drawLayout
@@ -24,26 +24,22 @@ async function onKeyUp(e) {
   if (state.raw !== ui.input.value) {
     state.raw = ui.input.value;
     // todo - separate parse input from getting initial info about action
-    parseInput();
-    if (state.action) {
-      await resolveAction();
+    state.match = parseInput();
+    if (state.match) {
+      state.content = await resolveAction();
       drawLayout();
     }
   }
 }
 
 function parseInput() {
-  let match = parser.parse(state.raw);
-  state.action = match;
+  return parser.parse(state.raw);
 }
 
 async function resolveAction() {
-  let result = await state.action.action.resolve(state.action, state.action.input);
+  let result = await state.match.action.resolve(state);
   // if (state.raw !== state.match.input) return; // todo: handle canceling responses better
-  console.debug(result);
-  state.url = result.url;
-  state.action = result.action;
-  state.content = result.content;
+  return result.content;
 }
 
 function onKeyDown(e) {
@@ -53,9 +49,10 @@ function onKeyDown(e) {
 }
 
 function drawLayout() {
-  if (state.action && typeof state.action.layout !== 'undefined') {
+  console.debug('state', state);
+  if (state.match && typeof state.match.action.layout !== 'undefined') {
     ui.content.classList.remove('hide-main');
-    state.layoutConfig = layouts.find(x => x.key === state.action.layout)
+    state.layoutConfig = layouts.find(x => x.key === state.match.action.layout);
     ui.drawMain(state.layoutConfig.resolve(state, state.content.selectedIndex));
   } else {
     ui.content.classList.add('hide-main');
@@ -63,7 +60,6 @@ function drawLayout() {
 }
 
 function main() {
-  var result;
   window.addEventListener('DOMContentLoaded', onInit);
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('keydown', onKeyDown);

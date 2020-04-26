@@ -7,30 +7,30 @@ const auth = {
 
 function get(url) { return rest.get(url, auth); }
 
-function getIssue(context, issue) {
-    const url = `${context.project.baseUrl}/rest/api/2/issue/${issue}`;
+function getIssue(project, issue) {
+    const url = `${project.baseUrl}/rest/api/2/issue/${issue}`;
     return get(url).then(response => {
-        return buildIssue(response.data, context.project.baseUrl);
+        return buildIssue(response.data, project.baseUrl);
     });
 }
 
-function getIssues(context, issues) {
+function getIssues(project, issues) {
     const jql = issues.map(x => `key = ${x.key}`).join(' OR ');
-    const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}`;
+    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}`;
     return get(url).then(response => {
-        return response.data.issues.map(r => buildIssue(r, context.project.baseUrl));
+        return response.data.issues.map(r => buildIssue(r, project.baseUrl));
     });
 }
 
-function searchIssues(context, jql) {
-    const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
+function searchIssues(project, jql) {
+    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
     return get(url).then(response => {
-        return response.data.issues.map(r => buildIssue(r, context.project.baseUrl));
+        return response.data.issues.map(r => buildIssue(r, project.baseUrl));
     });
 }
 
-function getGithubInfo(context, issueId) {
-    const url = `${context.project.baseUrl}/rest/dev-status/latest/issue/detail?issueId=${issueId}&applicationType=GitHub&dataType=branch`;
+function getGithubInfo(project, issueId) {
+    const url = `${project.baseUrl}/rest/dev-status/latest/issue/detail?issueId=${issueId}&applicationType=GitHub&dataType=branch`;
     return get(url).then(response => {
         return buildGithubInfo(response.data);
     });

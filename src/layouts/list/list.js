@@ -32,20 +32,20 @@ function getDetails(state, issue) {
     setTimeout(() => {
         // todo fix base url - get from config
 
-        jira.getIssue({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.key).then((result) => {
+        jira.getIssue({baseUrl: 'https://scalaric.atlassian.net'}, issue.key).then((result) => {
             state.content.details.issue.loading = false;
             state.content.details.issue.data = result;
             state.drawLayout();
         });
 
-        jira.getGithubInfo({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.id).then(result => {
+        jira.getGithubInfo({baseUrl: 'https://scalaric.atlassian.net'}, issue.id).then(result => {
             state.content.details.github.loading = false;
             state.content.details.github.data = result;
             state.drawLayout();
         });
 
         if (issue.links) {
-            jira.getIssues({project: {baseUrl: 'https://scalaric.atlassian.net'}}, issue.links.map(x => x.issue)).then(result => {
+            jira.getIssues({baseUrl: 'https://scalaric.atlassian.net'}, issue.links.map(x => x.issue)).then(result => {
                 state.content.details.links.loading = false;
                 state.content.details.links.data = result;
                 state.drawLayout();

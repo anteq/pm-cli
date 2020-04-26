@@ -14,10 +14,10 @@ const config = {
 };
 module.exports = config;
 
-function resolveAdd(context, value) {
-    let arguments = parseArguments(value);
+function resolveAdd(state) {
+    let arguments = parseArguments(state.match.input);
     let props = [
-        findProject(context.project),
+        findProject(state.match.project),
         findReporter(reporter),
         findAssignee(arguments.properties),
         findPriority(arguments.properties),
@@ -26,8 +26,7 @@ function resolveAdd(context, value) {
         findSummary(arguments.summary)
     ].filter(x => !!x);
     return {
-        url: buildUrl(props, context),
-        action: config,
+        url: buildUrl(props, state.match.project),
         content: {
             icon: config.icon,
             text: buildText(props)
@@ -35,8 +34,8 @@ function resolveAdd(context, value) {
     };
 }
 
-function buildUrl(props, context) {
-    return `${context.project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.length ? props.map(x => `${x.jiraKey}=${x.value}`).join('&') : ''}`;
+function buildUrl(props, project) {
+    return `${project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.length ? props.map(x => `${x.jiraKey}=${x.value}`).join('&') : ''}`;
 }
 
 function buildText(props) {

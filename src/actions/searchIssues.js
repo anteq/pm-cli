@@ -13,9 +13,10 @@ const config = {
 };
 module.exports = config;
 
-async function resolveSearch(context, value) {
+async function resolveSearch(state) {
     let data;
-    await jira.searchIssues(context, buildJQL(context, value)).then(
+    const project = state.match.project;
+    await jira.searchIssues(project, buildJQL(project, state.match.input)).then(
         (result) => {
             data = result
         }, (error) => {
@@ -23,19 +24,18 @@ async function resolveSearch(context, value) {
         }
     );
     return {
-        url: createSearchUrl(context, value),
-        action: config,
+        url: createSearchUrl(project, state.match.input),
         content: {
             items: data,
-            text: wrap(`Search ${value ? 'for {search}': ''} within {project}`, { search: value, project: context.project.key.toUpperCase() }),
+            text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: project.key.toUpperCase() }),
         }
     };
 }
 
-function buildJQL(context, value) {
-    return `project = ${context.project.key.toUpperCase()} ${ value ? 'and text ~"' + value + '\"' : ''} order by created desc`;
+function buildJQL(project, value) {
+    return `project = ${project.key.toUpperCase()} ${ value ? 'and text ~"' + value + '\"' : ''} order by created desc`;
 }
 
-function createSearchUrl(context, value) {
-    return `${context.project.baseUrl}/issues/?jql=${escape(buildJQL(context, value))}`;
+function createSearchUrl(project, value) {
+    return `${project.baseUrl}/issues/?jql=${escape(buildJQL(project, value))}`;
 }

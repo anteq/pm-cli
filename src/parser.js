@@ -32,13 +32,13 @@ function pushTriggerRegexps(action, context, replacement, regexps) {
     }
 }
 
-function parse(input) {
+function parse(raw) {
     let search = configureSearch();
     for (let action of search) {
-        const match = input.match(action.regexp);
+        const match = raw.match(action.regexp);
         if (match) {
-            const index = match[1] === "" ? match[0].length : input.indexOf(match[1]);
-            return { ...action, input: input.slice(index).trim() };
+            const index = match[1] === "" ? match[0].length : raw.indexOf(match[1]);
+            return { ...action, raw, input: raw.slice(index).trim() };
         }
     }
     return null;

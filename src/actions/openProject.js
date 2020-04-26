@@ -12,12 +12,12 @@ const config = {
 };
 module.exports = config;
 
-function resolveOpen(context, value) {
+function resolveOpen(state) {
+    const project = state.match.project;
     return {
-        url: `${context.project.baseUrl}/secure/RapidBoard.jspa?rapidView=${context.project.jiraRapidViewId}&projectKey=${context.project.key.toUpperCase()}`,
-        action: config,
+        url: `${project.baseUrl}/secure/RapidBoard.jspa?rapidView=${project.jiraRapidViewId}&projectKey=${project.key.toUpperCase()}`,
         content: {
-            text: wrap(`Open {project}`, {project: context.project.key.toUpperCase()}),
+            text: wrap(`Open {project}`, {project: project.key.toUpperCase()}),
             icon: config.icon
         }
     };
