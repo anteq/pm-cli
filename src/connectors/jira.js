@@ -1,4 +1,5 @@
 const { api } = require('../config');
+const moment = require('moment');
 const rest = require('../rest');
 
 const auth = {
@@ -54,7 +55,7 @@ function buildBranches(detail) {
             name: x.name,
             url: x.url,
             repository: x.repository.name,
-            lastModified: x.lastCommit.authorTimestamp,
+            updated: moment(x.lastCommit.authorTimestamp),
             lastCommit: {
                 id: x.lastCommit.id,
                 author: x.lastCommit.author.name,
@@ -71,7 +72,7 @@ function buildPrs(detail) {
             id: x.id,
             name: x.name,
             url: x.url,
-            lastUpdate: x.lastUpdate,
+            updated: moment(x.lastUpdate),
             status: x.status
         };
     });
@@ -84,13 +85,17 @@ function buildIssue(response, baseUrl) {
         url: `${baseUrl}/browse/${response.key}`,
         key: response.key,
         id: response.id,
+        created: moment(response.fields.created),
+        updated: moment(response.fields.modified),
         issueType: buildIssueType(response.fields),
         priority: buildPriority(response.fields),
         status: buildStatus(response.fields),
+        reporter: buildReporter(response.fields),
         assignee: buildAssignee(response.fields),
         sprint: buildSprint(response.fields),
         github: buildGithub(response.fields),
         links: buildLinks(response.fields),
+        comments: buildComments(response.fields),
         summary: response.fields.summary
     };
 }
@@ -121,6 +126,15 @@ function buildAssignee(fields) {
         name: fields.assignee ? fields.assignee.displayName : 'Unassigned',
         id: fields.assignee ? fields.assignee.accountId : null,
         img: fields.assignee ? fields.assignee.avatarUrls['48x48'] : null
+    };
+}
+
+    
+function buildReporter(fields) {
+    return {
+        name: fields.reporter ? fields.reporter.displayName : '-',
+        id: fields.reporter ? fields.reporter.accountId : null,
+        img: fields.reporter ? fields.reporter.avatarUrls['48x48'] : null
     };
 }
 
@@ -163,6 +177,24 @@ function buildLink(link) {
             issuetype: buildIssueType(issue.fields)
         }
     };
+}
+
+function buildComments(fields) {
+    if (fields.comment) {
+        return fields.comment.comments.map(x => {
+            return {
+                author: {
+                    name: x.updateAuthor ? x.updateAuthor.displayName : 'Unknown',
+                    id: x.updateAuthor ? x.updateAuthor.accountId : null,
+                    img: x.updateAuthor ? x.updateAuthor.avatarUrls['48x48'] : null
+                },
+                text: x.body,
+                created: moment(x.updated)
+            };
+        }).reverse();
+    } else {
+        return null;
+    }
 }
 
 module.exports = { getIssue, getIssues, searchIssues, getGithubInfo };
