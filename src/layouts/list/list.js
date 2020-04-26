@@ -1,5 +1,6 @@
 const jira = require('../../connectors/jira');
-const { buildItem } = require('./list-item');
+const { build: buildItem } = require('./list-item');
+const { build: buildDetails } = require('./list-detailed');
 const { loadTemplate } = require('../../utils'); 
 
 const config = {
@@ -70,9 +71,8 @@ function resolveList(state, _selectedIndex) {
             state.content.selectedIndex = selectedIndex;
             getDetails(state, state.content.items[state.content.selectedIndex]);
         }
-        if (state.content.details.github) {
-            doc.querySelector('.column-layout__right').innerHTML = '<span>' + JSON.stringify(state.content.details.github) + '</span>';
-        }
+        doc.querySelector('.column-layout__right').innerHTML = '';
+        doc.querySelector('.column-layout__right').appendChild(buildDetails(state));
     }
     
     console.debug('drawing', state, doc);

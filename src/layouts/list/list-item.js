@@ -3,7 +3,7 @@ const { loadTemplate } = require('../../utils');
 
 const template = loadTemplate('src/layouts/list/list-item.html');
 
-function createIssueHTML(template, data, isSelected) {
+function build(data, isSelected) {
     if (!data) return null;
     let issue = template.cloneNode(true);
     console.debug(issue);
@@ -24,8 +24,4 @@ function createIssueHTML(template, data, isSelected) {
     return issue;
 }
 
-function buildItem(item, isSelected) {
-    return createIssueHTML(template, item, isSelected);
-}
-
-module.exports = { buildItem };
+module.exports = { build };
