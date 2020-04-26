@@ -50,6 +50,7 @@ function buildGithubInfo(response) {
 }
 
 function buildBranches(detail) {
+    if (!detail.branches || !detail.branches.length) return null;
     return detail.branches.map(x => {
         return {
             name: x.name,
@@ -66,6 +67,7 @@ function buildBranches(detail) {
 }
 
 function buildPrs(detail) {
+    if (!detail.pullRequests || !detail.pullRequests.length) return null;
     return detail.pullRequests.map(x => {
         return {
             author: x.author.name,

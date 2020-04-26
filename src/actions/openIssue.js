@@ -15,7 +15,7 @@ module.exports = config;
 
 function resolveOpen(state) {
     const no = parseInt(state.match.input);
-    const issue = project.key.toUpperCase() + (isNaN(no) ? '' : `-${no}`)
+    const issue = state.match.project.key.toUpperCase() + (isNaN(no) ? '' : `-${no}`)
     setTimeout(() => { callGetIssue(state, issue); })
     return {
         url: `${state.match.project.baseUrl}/browse/${issue}`,

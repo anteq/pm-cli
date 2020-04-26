@@ -3,7 +3,7 @@ const { loadTemplate } = require('../../utils');
 
 const template = loadTemplate('src/layouts/list/list-detailed.html');
 
-function build(data, link) {
+function build(data, github, link) {
     if (!data) return null;
     let doc = template.cloneNode(true);
     if (link) {
@@ -32,6 +32,25 @@ function build(data, link) {
     doc.addEventListener('click', () => {
         shell.openExternal(data.url, { activate: true });
     });
+    if (github && github.prs) {
+        for (let pr of github.prs) {
+            let temp = doc.querySelector('.pr').cloneNode(true);
+            temp.classList.remove('hide');
+            temp.querySelector('.pr__header--title').innerHTML = pr.id + ' ' + pr.name;
+            temp.querySelector('.pr__header--sub').innerHTML = pr.updated.fromNow();
+            temp.querySelector('.pr__header--status').innerHTML = pr.status;
+            if (pr.url.includes('tm-webapp') && !('merged', 'closed').includes(pr.status.toLowerCase())) {
+                temp.querySelector('.pr__links').classList.remove('hide');
+                temp.querySelector('.pr__links--app').setAttribute('href', `https://${data.key}-app.tagger.dev`);
+                temp.querySelector('.pr__links--creator').setAttribute('href', `https://${data.key}-creator.tagger.dev`);
+                temp.querySelector('.pr__links--collaborator').setAttribute('href', `https://${data.key}-collaborator.tagger.dev`);
+            }
+            addEventListener('click', () => {
+                shell.openExternal(pr.url, { activate: true });
+            });
+            doc.appendChild(temp);
+        }
+    }
 
     console.debug(doc);
 

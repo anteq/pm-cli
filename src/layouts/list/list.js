@@ -76,10 +76,11 @@ function resolveList(state, _selectedIndex) {
         }
         if (state.content.details.issue) {
             emptyNode(doc, '.column-layout__right');
-            appendChild(doc, '.column-layout__right', buildDetails(state.content.details.issue.data));
+            appendChild(doc, '.column-layout__right', buildDetails(state.content.details.issue.data, state.content.details.github.data));
             if (state.content.details.links) {
                 for (let i in state.content.details.links.data) {
-                    appendChild(doc, '.column-layout__right', buildDetails(state.content.details.links.data[i], state.content.details.issue.data));
+                    // todo need to download gh data about links
+                    appendChild(doc, '.column-layout__right', buildDetails(state.content.details.links.data[i], null, state.content.details.issue.data));
                 }
             }
         }
