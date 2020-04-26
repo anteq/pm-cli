@@ -1,7 +1,7 @@
 const jira = require('../../connectors/jira');
 const { build: buildItem } = require('./list-item');
 const { build: buildDetails } = require('./list-detailed');
-const { loadTemplate } = require('../../utils'); 
+const { loadTemplate, emptyNode, appendChild } = require('../../utils'); 
 
 const config = {
     key: 'list',
@@ -63,27 +63,26 @@ function resolveList(state, _selectedIndex) {
     let selectedIndex = _selectedIndex || 0;
     
     if (state.content.items) {
-        doc.querySelector('.column-layout__left').innerHTML = '';
+        emptyNode(doc, '.column-layout__left');
         for (let i in state.content.items) {
-            doc.querySelector('.column-layout__left').appendChild(buildItem(state.content.items[i], i == state.content.selectedIndex));
+            appendChild(doc, '.column-layout__left', buildItem(state.content.items[i], i == state.content.selectedIndex));
         }
         if (!state.content.details) {
             state.content.selectedIndex = selectedIndex;
             getDetails(state, state.content.items[state.content.selectedIndex]);
         }
         if (state.content.details.issue) {
-            doc.querySelector('.column-layout__right').innerHTML = '';
-            doc.querySelector('.column-layout__right').appendChild(buildDetails(state.content.details.issue.data));
+            emptyNode(doc, '.column-layout__right');
+            appendChild(doc, '.column-layout__right', buildDetails(state.content.details.issue.data));
             if (state.content.details.links) {
                 for (let i in state.content.details.links.data) {
-                    doc.querySelector('.column-layout__right').appendChild(buildDetails(state.content.details.links.data[i], state.content.details.issue.data));
+                    appendChild(doc, '.column-layout__right', buildDetails(state.content.details.links.data[i], state.content.details.issue.data));
                 }
             }
         }
         
     }
     
-    console.debug('drawing', state, doc);
     return doc;
 }
 

@@ -119,6 +119,7 @@ body {
     height: 100%;
     border-right: 1px rgba(0, 0, 0, 0.2) solid;
     float: left;
+    overflow: scroll;
 }
 
 .column-layout__right {
@@ -127,6 +128,7 @@ body {
     padding-left: 10px;
     padding-top: -5px;
     max-width: 38%;
+    overflow: scroll;
 }
 
 /* issue */
@@ -184,6 +186,14 @@ body {
     border-bottom:  1px rgba(0, 0, 0, 0.2) solid;
     padding-bottom: 10px;
     padding-top: 10px;
+}
+
+.details:hover {
+    background-color: #eee;
+}
+
+.dark .details:hover {
+    background-color: gray;
 }
 
 .details__summary {
