@@ -4,11 +4,11 @@ const ui = require('./ui');
 const parser = require('./parser');
 
 let state = {
-  value: null, 
+  raw: null, 
   url: null,
   content: {},
 
-  actionConfig: {},
+  action: {},
   layoutConfig: {},
 
   drawLayout
@@ -21,20 +21,28 @@ function onInit(e) {
 }
 
 async function onKeyUp(e) {
-  if (state.value !== ui.input.value) {
-    state.value = ui.input.value;
+  if (state.raw !== ui.input.value) {
+    state.raw = ui.input.value;
     // todo - separate parse input from getting initial info about action
-    await parseInput();
-    drawLayout();
+    parseInput();
+    if (state.action) {
+      await resolveAction();
+      drawLayout();
+    }
   }
 }
 
-async function parseInput() {
-  let { result, input } = await parser.parse(state.value);
-  if (state.value !== input) return; // todo: handle canceling responses better
-  if (!result) result = {};
+function parseInput() {
+  let match = parser.parse(state.raw);
+  state.action = match;
+}
+
+async function resolveAction() {
+  let result = await state.action.action.resolve(state.action, state.action.input);
+  // if (state.raw !== state.match.input) return; // todo: handle canceling responses better
+  console.debug(result);
   state.url = result.url;
-  state.actionConfig = result.action;
+  state.action = result.action;
   state.content = result.content;
 }
 
@@ -45,9 +53,9 @@ function onKeyDown(e) {
 }
 
 function drawLayout() {
-  if (state.actionConfig && typeof state.actionConfig.layout !== 'undefined') {
+  if (state.action && typeof state.action.layout !== 'undefined') {
     ui.content.classList.remove('hide-main');
-    state.layoutConfig = layouts.find(x => x.key === state.actionConfig.layout)
+    state.layoutConfig = layouts.find(x => x.key === state.action.layout)
     ui.drawMain(state.layoutConfig.resolve(state, state.content.selectedIndex));
   } else {
     ui.content.classList.add('hide-main');
