@@ -18,6 +18,7 @@ function onInit(e) {
   ui.init();
   ui.input.focus();
   if (remote.getGlobal('darkMode')) ui.setDarkMode();
+  drawLayout();
 }
 
 async function onKeyUp(e) {
@@ -50,7 +51,7 @@ function onKeyDown(e) {
 
 function drawLayout() {
   console.debug('state', state);
-  if (state.match && typeof state.match.action.layout !== 'undefined') {
+  if (state.match.action && typeof state.match.action.layout !== 'undefined') {
     ui.content.classList.remove('hide-main');
     state.layoutConfig = layouts.find(x => x.key === state.match.action.layout);
     ui.drawMain(state.layoutConfig.resolve(state, state.content.selectedIndex));
