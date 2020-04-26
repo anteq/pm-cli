@@ -160,6 +160,7 @@ function buildGithub(fields) {
 function buildLinks(fields) {
     let data = fields.issuelinks;
     if (!data || !data.length) return null;
+    // todo order by: first other project and first those with PRs
     return data.map(x => buildLink(x));
 }
 
