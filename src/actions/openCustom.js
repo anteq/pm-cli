@@ -15,9 +15,7 @@ module.exports = config;
 function resolveCustom(state) {
     return {
         url: state.match.custom.url,
-        content: {
-            text: wrap(`Open {custom}`, { custom: state.match.custom.name }),
-            icon: config.icon
-        }
+        text: wrap(`Open {custom}`, { custom: state.match.custom.name }),
+        icon: config.icon
     };
 }

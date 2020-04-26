@@ -12,12 +12,12 @@ const config = {
 module.exports = config;
 
 function onKeyDown(state, e) {
-    if (e.keyCode == '38') {
+    if (e.keyCode == '38' && state.content.selectedIndex > 0) {
         state.content.selectedIndex -= 1;
         state.content.details = null;
         state.drawLayout();
     }
-    else if (e.keyCode == '40') {
+    else if (e.keyCode == '40' && state.content.selectedIndex < state.content.items.length - 1) {
         state.content.selectedIndex += 1;
         state.content.details = null;
         state.drawLayout();

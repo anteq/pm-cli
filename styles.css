@@ -154,7 +154,7 @@ body {
 }
 
 .dark .issue.selected {
-    background-color: darkslategray;
+    background-color: #000;
     color: white !important;
 }
 

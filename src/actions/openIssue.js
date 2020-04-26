@@ -19,9 +19,7 @@ function resolveOpen(state) {
     setTimeout(() => { callGetIssue(state, issue); })
     return {
         url: `${state.match.project.baseUrl}/browse/${issue}`,
-        content: {
-            text: wrap(`Open {issue}`, {issue})
-        }        
+        text: wrap(`Open {issue}`, {issue})      
     };
 }
 

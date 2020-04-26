@@ -5,7 +5,6 @@ const parser = require('./parser');
 
 let state = {
   raw: null, 
-  url: null,
   content: {},
 
   match: {},
@@ -24,7 +23,6 @@ function onInit(e) {
 async function onKeyUp(e) {
   if (state.raw !== ui.input.value) {
     state.raw = ui.input.value;
-    // todo - separate parse input from getting initial info about action
     state.match = parseInput();
     if (state.match) {
       state.content = await resolveAction();
@@ -38,9 +36,7 @@ function parseInput() {
 }
 
 async function resolveAction() {
-  let result = await state.match.action.resolve(state);
-  // if (state.raw !== state.match.input) return; // todo: handle canceling responses better
-  return result.content;
+  return state.match.action.resolve(state);
 }
 
 function onKeyDown(e) {

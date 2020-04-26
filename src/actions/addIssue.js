@@ -27,11 +27,9 @@ function resolveAdd(state) {
     ].filter(x => !!x);
     return {
         url: buildUrl(props, state.match.project),
-        content: {
-            icon: config.icon,
-            text: buildText(props)
-        }
-    };
+        icon: config.icon,
+        text: buildText(props)
+    }
 }
 
 function buildUrl(props, project) {

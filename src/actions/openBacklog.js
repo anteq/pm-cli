@@ -16,9 +16,7 @@ function resolveBacklog(state) {
     const project = state.match.project;
     return {
         url: `${project.baseUrl}/secure/RapidBoard.jspa?rapidView=${project.jiraRapidViewId}&projectKey=${project.key.toUpperCase()}&view=planning`,
-        content: {
-            icon: config.icon,
-            text: wrap(`Go to {project} Backlog`, { project: project.key.toUpperCase() }),
-        }
+        icon: config.icon,
+        text: wrap(`Go to {project} Backlog`, { project: project.key.toUpperCase() })
     };
 }

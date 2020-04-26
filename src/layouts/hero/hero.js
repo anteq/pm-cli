@@ -9,9 +9,9 @@ module.exports = config;
 
 function resolveHero(data) {
     console.debug('hero', data);
-    let { text, icon } = data;
+    let { text, icon } = data.content;
     let doc = config.template.cloneNode(true);
-    if (data.text) {
+    if (text) {
         doc.querySelector('.hero-layout__description').innerHTML = text || '';
         doc.querySelector('.hero-layout__icon').innerHTML = icon || '';
     }

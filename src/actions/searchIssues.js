@@ -19,10 +19,7 @@ function resolveSearch(state) {
     setTimeout(() => callSearch(state));
     return {
         url: createSearchUrl(state.match.project, state.match.input),
-        content: {
-            // items: data,
-            text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: state.match.project.key.toUpperCase() }),
-        }
+        text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: state.match.project.key.toUpperCase() })
     };
 }
 

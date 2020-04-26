@@ -16,9 +16,7 @@ function resolveOpen(state) {
     const project = state.match.project;
     return {
         url: `${project.baseUrl}/secure/RapidBoard.jspa?rapidView=${project.jiraRapidViewId}&projectKey=${project.key.toUpperCase()}`,
-        content: {
-            text: wrap(`Open {project}`, {project: project.key.toUpperCase()}),
-            icon: config.icon
-        }
+        text: wrap(`Open {project}`, {project: project.key.toUpperCase()}),
+        icon: config.icon
     };
 }
