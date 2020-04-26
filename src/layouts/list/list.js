@@ -1,11 +1,10 @@
-const path = require('path');
-const { shell } = require('electron');
-const fs = require('fs');
-const jira = require('../connectors/jira');
+const jira = require('../../connectors/jira');
+const { buildItem } = require('./list-item');
+const { loadTemplate } = require('../../utils'); 
 
 const config = {
     key: 'list',
-    template: fs.readFileSync('src/layouts/list.html', 'utf8'),
+    template: loadTemplate('src/layouts/list/list.html'),
     onKeyDown: onKeyDown,
     resolve: resolveList
 };
@@ -60,43 +59,22 @@ function getDetails(state, issue) {
 
 function resolveList(state, _selectedIndex) {
     console.debug('drawing!', state);
-    let parser = new DOMParser();
+    let doc = config.template.cloneNode(true);
     let selectedIndex = _selectedIndex || 0;
-    let doc = parser.parseFromString(config.template, 'text/html');
     if (!state.content.details) {
         state.content.selectedIndex = selectedIndex;
         getDetails(state, state.content.items[state.content.selectedIndex]);
     }
     if (state.content.items) {
-        let issueTemplate = doc.querySelector('#issue-template');
         doc.querySelector('.column-layout__left').innerHTML = '';
         for (let i in state.content.items) {
-            doc.querySelector('.column-layout__left').appendChild(createIssueHTML(issueTemplate, state.content.items[i], i == state.content.selectedIndex));
+            doc.querySelector('.column-layout__left').appendChild(buildItem(state.content.items[i], i == state.content.selectedIndex));
         }
     }
     if (state.content.details.github) {
         doc.querySelector('.column-layout__right').innerHTML = '<span>' + JSON.stringify(state.content.details.github) + '</span>';
     }
-    console.debug('html', doc.querySelector('body').childNodes[0]);
-    return doc.querySelector('body').childNodes[0];
+    console.debug('html', doc);
+    return doc;
 }
 
-function createIssueHTML(template, data, isSelected) {
-    if (!data) return null;
-    let issue = template.cloneNode(true);
-    issue.removeAttribute('id');
-    issue.classList.remove('hide');
-    if (isSelected) issue.classList.add('selected');
-    issue.dataset.url = data.url;
-    issue.querySelector('.issue__icon--priority').setAttribute('src', data.priority.icon);
-    issue.querySelector('.issue__icon--issuetype').setAttribute('src', data.issueType.icon);
-    issue.querySelector('.issue__content--key').innerHTML = data.key ? data.key : '-';
-    issue.querySelector('.issue__content--summary').innerHTML = data.summary ? data.summary : '-';
-    // issue.querySelector('.issue__content--status').innerHTML = data.status.name;
-    issue.querySelector('.issue__content--assignee').innerHTML = data.assignee ? data.assignee.name : '-';
-    issue.querySelector('.issue__content--sprint').innerHTML = data.sprint ? data.sprint.name : '-';
-    issue.addEventListener('click', () => {
-        shell.openExternal(data.url, { activate: true });
-    });
-    return issue;
-  }

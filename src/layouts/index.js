@@ -1,5 +1,5 @@
-const hero = require('./hero');
-const list = require('./list');
+const hero = require('./hero/hero');
+const list = require('./list/list');
 
 module.exports = { 
     layouts: [hero, list]
