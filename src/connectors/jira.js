@@ -1,51 +1,30 @@
 const { api } = require('../config');
-const request = require('request');
+const rest = require('../rest');
 
-const options = {
-    json: true,
-    headers: {
-        'Authorization': 'Basic ' + Buffer.from(api.jira.login + ":" + api.jira.key).toString("base64")
-    }
+const auth = {
+    'Authorization': 'Basic ' + Buffer.from(api.jira.login + ":" + api.jira.key).toString("base64")
 };
+
+function get(url) { return rest.get(url, auth); }
 
 function getIssue(context, issue) {
     const url = `${context.project.baseUrl}/rest/api/2/issue/${issue}`;
     return get(url).then(response => {
-        return buildIssue(response, context.project.baseUrl);
+        return buildIssue(response.data, context.project.baseUrl);
     });
 }
 
 function searchIssues(context, jql) {
     const url = `${context.project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
     return get(url).then(response => {
-        return response.issues.map(r => buildIssue(r, context.project.baseUrl));
+        return response.data.issues.map(r => buildIssue(r, context.project.baseUrl));
     });
 }
 
 function getGithubInfo(context, issueId) {
     const url = `${context.project.baseUrl}/rest/dev-status/latest/issue/detail?issueId=${issueId}&applicationType=GitHub&dataType=branch`;
     return get(url).then(response => {
-        return buildGithubInfo(response);
-    });
-}
-
-let getRequest;
-function get(url) {
-    if (getRequest) getRequest.abort();
-    return new Promise((resolve, reject) => {
-        getRequest = request.get({ ...options, url }, (err, res, data) => {
-            if (err) reject(err)
-            else resolve(data);
-        })
-    });
-}
-
-function post(url, body, error, success) {
-    return new Promise((resolve, reject) => {
-        request.get({ ...options, url, body }, (err, res, data) => {
-            if (err) reject(err)
-            else resolve(data);
-        })
+        return buildGithubInfo(response.data);
     });
 }
 
