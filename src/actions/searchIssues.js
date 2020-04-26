@@ -13,23 +13,26 @@ const config = {
 };
 module.exports = config;
 
-async function resolveSearch(state) {
-    let data;
-    const project = state.match.project;
-    await jira.searchIssues(project, buildJQL(project, state.match.input)).then(
-        (result) => {
-            data = result
-        }, (error) => {
-            console.error('err', error);
-        }
-    );
+let call;
+
+function resolveSearch(state) {
+    setTimeout(() => callSearch(state));
     return {
-        url: createSearchUrl(project, state.match.input),
+        url: createSearchUrl(state.match.project, state.match.input),
         content: {
-            items: data,
-            text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: project.key.toUpperCase() }),
+            // items: data,
+            text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: state.match.project.key.toUpperCase() }),
         }
     };
+}
+
+function callSearch(state) {
+    if (call) call.cancel();
+    call = jira.searchIssues(state.match.project, buildJQL(state.match.project, state.match.input))
+    call.then((result) => {
+        state.content.items = result;
+        state.drawLayout();
+    });
 }
 
 function buildJQL(project, value) {

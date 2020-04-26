@@ -7,16 +7,16 @@ class ApiCall {
         this.cancelFunc = cancelFunc;
     }
     then(func) {
-        this.promise.then(func);
+        this.promise = this.promise.then(func);
+        return this;
     }
     cancel() {
-        console.debug('cancelled');
         this.cancelFunc();
     }
 }
 
 
-async function get(url, headers) {
+function get(url, headers) {
     let cancel;
     let promise = axios({
         headers,

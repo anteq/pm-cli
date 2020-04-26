@@ -5,7 +5,10 @@ const auth = {
     'Authorization': 'Basic ' + Buffer.from(api.jira.login + ":" + api.jira.key).toString("base64")
 };
 
-function get(url) { return rest.get(url, auth); }
+function get(url) { 
+    let call = rest.get(url, auth);
+    return call;
+}
 
 function getIssue(project, issue) {
     const url = `${project.baseUrl}/rest/api/2/issue/${issue}`;
@@ -24,9 +27,10 @@ function getIssues(project, issues) {
 
 function searchIssues(project, jql) {
     const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
-    return get(url).then(response => {
+    const call = get(url).then(response => {
         return response.data.issues.map(r => buildIssue(r, project.baseUrl));
     });
+    return call;
 }
 
 function getGithubInfo(project, issueId) {

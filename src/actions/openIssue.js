@@ -13,24 +13,23 @@ const config = {
 };
 module.exports = config;
 
-async function resolveOpen(state) {
+function resolveOpen(state) {
     const no = parseInt(state.match.input);
-    console.debug(state);
-    const project = state.match.project;
     const issue = project.key.toUpperCase() + (isNaN(no) ? '' : `-${no}`)
-    let data;
-    await jira.getIssue(project, issue).then(
-        (result) => {
-            data = result;
-        }, (error) => {
-            console.error('err', error);
-        }
-    );
+    setTimeout(() => { callGetIssue(state, issue); })
     return {
-        url: `${project.baseUrl}/browse/${issue}`,
+        url: `${state.match.project.baseUrl}/browse/${issue}`,
         content: {
-            text: wrap(`Open {issue}`, {issue}),
-            items: [data]
+            text: wrap(`Open {issue}`, {issue})
         }        
     };
+}
+
+function callGetIssue(state, issue) {
+    jira.getIssue(state.match.project, issue).then(
+        (result) => {
+            state.content.items = [result];
+            state.drawLayout();
+        }
+    );
 }

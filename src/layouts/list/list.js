@@ -58,23 +58,24 @@ function getDetails(state, issue) {
 }
 
 function resolveList(state, _selectedIndex) {
-    console.debug('drawing!', state);
     let doc = config.template.cloneNode(true);
     let selectedIndex = _selectedIndex || 0;
-    if (!state.content.details) {
-        state.content.selectedIndex = selectedIndex;
-        getDetails(state, state.content.items[state.content.selectedIndex]);
-    }
+    
     if (state.content.items) {
         doc.querySelector('.column-layout__left').innerHTML = '';
         for (let i in state.content.items) {
             doc.querySelector('.column-layout__left').appendChild(buildItem(state.content.items[i], i == state.content.selectedIndex));
         }
+        if (!state.content.details) {
+            state.content.selectedIndex = selectedIndex;
+            getDetails(state, state.content.items[state.content.selectedIndex]);
+        }
+        if (state.content.details.github) {
+            doc.querySelector('.column-layout__right').innerHTML = '<span>' + JSON.stringify(state.content.details.github) + '</span>';
+        }
     }
-    if (state.content.details.github) {
-        doc.querySelector('.column-layout__right').innerHTML = '<span>' + JSON.stringify(state.content.details.github) + '</span>';
-    }
-    console.debug('html', doc);
+    
+    console.debug('drawing', state, doc);
     return doc;
 }
 
