@@ -1,4 +1,5 @@
 const jira = require('../../connectors/jira');
+const { shell } = require('electron');
 const { build: buildItem } = require('./list-item');
 const { build: buildDetails } = require('./list-detailed');
 const { loadTemplate, emptyNode, appendChild } = require('../../utils'); 
@@ -21,6 +22,8 @@ function onKeyDown(state, e) {
         state.content.selectedIndex += 1;
         state.content.details = null;
         state.drawLayout();
+    } else if (e.key === 'Enter') {
+        shell.openExternal(state.content.items[state.content.selectedIndex].url, { activate: true });
     }
 }
 

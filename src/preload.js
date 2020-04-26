@@ -40,7 +40,6 @@ async function resolveAction() {
 }
 
 function onKeyDown(e) {
-  if (e.key === 'Enter' && result && result.url) shell.openExternal(result.url, { activate: true });
   if (e.keyCode == '27') remote.getCurrentWindow().close();
   if (state.layoutConfig && state.layoutConfig.onKeyDown) state.layoutConfig.onKeyDown(state, e);
 }
