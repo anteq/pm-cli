@@ -14,8 +14,10 @@ function build(data, link) {
     doc.querySelector('.issue__icon--priority').setAttribute('src', data.priority.icon);
     doc.querySelector('.issue__icon--issuetype').setAttribute('src', data.issueType.icon);
     doc.querySelector('.details__summary--key').innerHTML = data.key ? data.key : '-';
+    doc.querySelector('.details__summary--key').classList.add(data.status.name.replace(' ', '-').toLowerCase());
+    doc.querySelector('.details__summary--status').innerHTML = data.status.name;
+    doc.querySelector('.details__summary--status').classList.add(data.status.color);
     doc.querySelector('.details__title').innerHTML = data.summary ? data.summary : '-';
-    // issue.querySelector('.issue__content--status').innerHTML = data.status.name;
     doc.querySelector('.details__sub--assignee').innerHTML = data.assignee ? data.assignee.name : '-';
     doc.querySelector('.details__sub--reporter').innerHTML = data.reporter ? data.reporter.name : '-'
     doc.querySelector('.details__sub--reported').innerHTML = data.created ? data.created.fromNow() : '-';

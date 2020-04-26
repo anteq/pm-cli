@@ -116,8 +116,8 @@ function buildPriority(fields) {
 
 function buildStatus(fields) {
     return {
-        name: fields.status.name,
-        icon: fields.status.iconUrl
+        color: fields.status.statusCategory.colorName,
+        name: fields.status.name
     };
 }
 
