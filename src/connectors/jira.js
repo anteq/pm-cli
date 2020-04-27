@@ -89,7 +89,7 @@ function buildIssue(response, baseUrl) {
         id: response.id,
         created: moment(response.fields.created),
         updated: moment(response.fields.modified),
-        issueType: buildIssueType(response.fields),
+        issuetype: buildIssueType(response.fields),
         priority: buildPriority(response.fields),
         status: buildStatus(response.fields),
         reporter: buildReporter(response.fields),
