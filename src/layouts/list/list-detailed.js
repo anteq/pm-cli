@@ -8,30 +8,33 @@ const template = loadTemplate('src/layouts/list/list-detailed.html');
 function build(issue, state) {
     if (!issue) return null;
     let github = state.content.details.github ? state.content.details.github.data : {};
-    let devSprint = state.content.devSprint ? (state.content.devSprint.data || []) : [];
+    let devSprint = state.devSprint ? (state.devSprint.data || []) : [];
 
     let doc = template.cloneNode(true);
 
     let rank = {};
-    let assigneeSprint = devSprint.find(x => x.assignee.jiraId == issue.assignee.id);
-    let inProgress = assigneeSprint.issues.find(i => i.status === resolutionCategories.IN_PROGRESS) || { issues: [] };
-    let toDo = assigneeSprint.issues.find(i => i.status === resolutionCategories.TO_DO) || { issues: [] };
-    let issueRankInProgress = inProgress.issues.findIndex(x => x.key === issue.key);
-    let issueRankToDo = toDo.issues.findIndex(x => x.key === issue.key);
-    if (issueRankInProgress && issueRankInProgress !== -1) {
-        rank = {
-            type: resolutionCategories.IN_PROGRESS,
-            index: issueRankInProgress,
-            issuesBefore: inProgress.issues.slice(0, issueRankInProgress)
-        };
-    } else {
-        rank = {
-            type: resolutionCategories.TO_DO,
-            index: inProgress.issues.length + issueRankToDo,
-            issuesBefore: [...inProgress.issues, ...toDo.issues.slice(0, issueRankToDo)]
-        };
+    if (devSprint) {
+        let assigneeSprint = devSprint.find(x => x.assignee.jiraId == issue.assignee.id);
+        if (assigneeSprint) {
+            let inProgress = assigneeSprint.issues.find(i => i.status === resolutionCategories.IN_PROGRESS) || { issues: [] };
+            let toDo = assigneeSprint.issues.find(i => i.status === resolutionCategories.TO_DO) || { issues: [] };
+            let issueRankInProgress = inProgress.issues.findIndex(x => x.key === issue.key);
+            let issueRankToDo = toDo.issues.findIndex(x => x.key === issue.key);
+            if (issueRankInProgress && issueRankInProgress !== -1) {
+                rank = {
+                    type: resolutionCategories.IN_PROGRESS,
+                    index: issueRankInProgress,
+                    issuesBefore: inProgress.issues.slice(0, issueRankInProgress)
+                };
+            } else if (issueRankToDo && issueRankToDo !== -1) {
+                rank = {
+                    type: resolutionCategories.TO_DO,
+                    index: inProgress.issues.length + issueRankToDo,
+                    issuesBefore: [...inProgress.issues, ...toDo.issues.slice(0, issueRankToDo)]
+                };
+            }
+        }
     }
-    console.debug(assigneeSprint);
 
     findAndFill(doc, {
         issue,

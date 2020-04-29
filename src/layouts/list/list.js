@@ -38,12 +38,14 @@ function getDetails(state, issue) {
         // todo fix base url - get from config
 
         jira.getIssue({baseUrl: 'https://scalaric.atlassian.net'}, issue.key).then((result) => {
+            console.debug('🌐 got issue details');
             state.content.details.issue.loading = false;
             state.content.details.issue.data = result;
             state.drawLayout();
         });
 
         jira.getGithubInfo({baseUrl: 'https://scalaric.atlassian.net'}, issue.id).then(result => {
+            console.debug('🌐 got gh info about issue');
             state.content.details.github.loading = false;
             state.content.details.github.data = result;
             state.drawLayout();
@@ -51,6 +53,7 @@ function getDetails(state, issue) {
 
         if (issue.links) {
             jira.getIssues({baseUrl: 'https://scalaric.atlassian.net'}, issue.links.map(x => x.issue)).then(result => {
+                console.debug('🌐 got issue links');
                 state.content.details.links.loading = false;
                 state.content.details.links.data = result;
                 state.drawLayout();
@@ -63,8 +66,9 @@ function getDetails(state, issue) {
 }
 
 function getCurrentDevSprint(state) {
-    if (!state.content.devSprint) state.content.devSprint = { loading: true, data: null};
+    state.devSprint.loading = true;
     jira.getCurrentSprint({baseUrl: 'https://scalaric.atlassian.net', key: 'TM'}).then(result => {
+        console.debug('🌐 got current dev sprint data');
         let statuses = [...new Set(result.map(t => t.status.category))];
         developers = people.map(p => {
             let allIssues = result.filter(r => r.assignee.id === p.jiraId);
@@ -78,8 +82,8 @@ function getCurrentDevSprint(state) {
                 })
             };
         });
-        state.content.devSprint.loading = false;
-        state.content.devSprint.data = developers;
+        state.devSprint.loading = false;
+        state.devSprint.data = developers;
         state.drawLayout();
     });
 }
@@ -107,7 +111,7 @@ function resolveList(state, _selectedIndex) {
                 }
             }
         }
-        if (!state.content.devSprint || !state.content.devSprint.data) {
+        if (!state.devSprint.loading && !state.devSprint.data) {
             getCurrentDevSprint(state);
         }
         

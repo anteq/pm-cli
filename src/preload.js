@@ -6,6 +6,7 @@ const parser = require('./parser');
 let state = {
   raw: null, 
   content: {},
+  devSprint: {loading: false, data: null},
 
   match: {},
   layoutConfig: {},
