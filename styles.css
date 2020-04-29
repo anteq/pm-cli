@@ -122,25 +122,24 @@ body {
 /* column layout */
 
 .column-layout {
+    display: flex;
     margin: auto;
     position: relative;
     height: 100%;
 }
 
 .column-layout__left {
-    width: 60%;
+    flex: 2;
     height: 100%;
     border-right: 1px rgba(0, 0, 0, 0.2) solid;
-    float: left;
     overflow: scroll;
 }
 
 .column-layout__right {
-    float: left;
+    flex: 3;
     height: 100%;
     padding-left: 10px;
     padding-top: -5px;
-    max-width: 38%;
     overflow: scroll;
 }
 
