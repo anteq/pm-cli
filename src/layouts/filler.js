@@ -3,17 +3,28 @@ const displayTypes = ['text', 'name', 'color', 'class', 'img', 'icon', 'date'];
 
 function findAndFill(doc, context) {
     console.debug(doc.querySelectorAll('[data-value]'));
-    let allValues = [...doc.querySelectorAll('[data-value]')].map(x => x.dataset.value);
-    for (let v of allValues) {
-        let node = doc.querySelector(`[data-value~="${v}"]`);
+    let allKeys = [...doc.querySelectorAll('[data-value]')].map(x => x.dataset.value);
+    for (let key of allKeys) {
+        findValueAndFill(key, doc, context)
+    }
+    return doc;
+}
+
+function findValueAndFill(key, doc, context) {
+    let node = doc.querySelector(`[data-value~="${key}"]:not([data-filled])`);
+    if (node) {
         let types = node.dataset.type ? node.dataset.type.split(' ') : ['text'];
         let value = getValue(context, node.dataset.value);
+        node.dataset.filled = true;
         if (types.includes('text')) node.innerHTML = value.text || value.name;
         if (types.includes('class')) node.classList.add(value.class || value.color);
         if (types.includes('img')) node.setAttribute('src', value.img || value.icon);
         if (types.includes('date')) node.innerHTML = typeof value.text.fromNow === 'function' ? value.text.fromNow() : '-';
+        if (doc.querySelector(`[data-value~="${key}"]:not([data-filled])`)) {
+            // recursively find another one to fill
+            findValueAndFill(key, doc, context);
+        }
     }
-    return doc;
 }
 
 function getValue(context, value) {
