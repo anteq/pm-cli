@@ -26,6 +26,17 @@ function getIssues(project, issues) {
     });
 }
 
+function getCurrentSprint(project) {
+    const jql = `project = "${project.key}" and sprint in openSprints() and status != "Done" order by rank asc`
+    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=100`;
+    return rest.all([get(url), get(url + '&startAt=100')]).then(response => {
+        // todo: handle more and handle nicer
+        let p1 = response[0].data.issues.map(r => buildIssue(r, project.baseUrl));
+        let p2 = response[1].data.issues.map(r => buildIssue(r, project.baseUrl));
+        return [...p1, ...p2];
+    });
+}
+
 function searchIssues(project, jql) {
     const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
     const call = get(url).then(response => {
@@ -119,6 +130,7 @@ function buildPriority(fields) {
 function buildStatus(fields) {
     return {
         color: fields.status.statusCategory.colorName,
+        category: fields.status.statusCategory.name,
         name: fields.status.name
     };
 }
@@ -200,4 +212,4 @@ function buildComments(fields) {
     }
 }
 
-module.exports = { getIssue, getIssues, searchIssues, getGithubInfo };
+module.exports = { getIssue, getIssues, searchIssues, getGithubInfo, getCurrentSprint };

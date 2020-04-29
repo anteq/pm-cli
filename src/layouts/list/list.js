@@ -2,7 +2,8 @@ const jira = require('../../connectors/jira');
 const { shell } = require('electron');
 const { build: buildItem } = require('./list-item');
 const { build: buildDetails } = require('./list-detailed');
-const { loadTemplate, emptyNode, appendChild } = require('../../utils'); 
+const { loadTemplate, emptyNode, appendChild } = require('../../utils');
+const { people } = require('../../config'); 
 
 const config = {
     key: 'list',
@@ -31,7 +32,7 @@ function getDetails(state, issue) {
     state.content.details = {
         issue: { loading: true, data: null },
         github: { loading: true, data: null },
-        links: { loading: true, data: null },
+        links: { loading: true, data: null }
     }
     setTimeout(() => {
         // todo fix base url - get from config
@@ -61,6 +62,28 @@ function getDetails(state, issue) {
     })
 }
 
+function getCurrentDevSprint(state) {
+    if (!state.content.devSprint) state.content.devSprint = { loading: true, data: null};
+    jira.getCurrentSprint({baseUrl: 'https://scalaric.atlassian.net', key: 'TM'}).then(result => {
+        let statuses = [...new Set(result.map(t => t.status.category))];
+        developers = people.map(p => {
+            let allIssues = result.filter(r => r.assignee.id === p.jiraId);
+            return {
+                assignee: p,
+                issues: statuses.map(s => {
+                    return {
+                        status: s,
+                        issues: allIssues.filter(i => i.status.category === s)
+                    };
+                })
+            };
+        });
+        state.content.devSprint.loading = false;
+        state.content.devSprint.data = developers;
+        state.drawLayout();
+    });
+}
+
 function resolveList(state, _selectedIndex) {
     let doc = config.template.cloneNode(true);
     let selectedIndex = _selectedIndex || 0;
@@ -76,13 +99,16 @@ function resolveList(state, _selectedIndex) {
         }
         if (state.content.details.issue) {
             emptyNode(doc, '.column-layout__right');
-            appendChild(doc, '.column-layout__right', buildDetails(state.content.details.issue.data, state.content.details.github.data));
+            appendChild(doc, '.column-layout__right', buildDetails(state.content.details.issue.data, state));
             if (state.content.details.links) {
                 for (let i in state.content.details.links.data) {
                     // todo need to download gh data about links
-                    appendChild(doc, '.column-layout__right', buildDetails(state.content.details.links.data[i], null, state.content.details.issue.data));
+                    appendChild(doc, '.column-layout__right', buildDetails(state.content.details.links.data[i], state));
                 }
             }
+        }
+        if (!state.content.devSprint || !state.content.devSprint.data) {
+            getCurrentDevSprint(state);
         }
         
     }

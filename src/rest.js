@@ -31,4 +31,8 @@ function post(url, headers, body) {
     return axios({ headers, method: 'POST', body, url });
 }
 
-module.exports = { get, post };
+function all(promises) {
+    return axios.all(promises);
+}
+
+module.exports = { get, post, all };

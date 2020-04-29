@@ -242,6 +242,15 @@ body {
     width: 100%;
     padding: 10px 20px;
     margin: 0 -20px;
+    display: flex;
+}
+
+.details-item__left {
+    flex: 4;
+}
+
+.details-item__right {
+    flex: 1;
 }
 
 .details-item:hover {
