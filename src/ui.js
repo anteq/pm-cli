@@ -5,7 +5,7 @@ function init() {
 }
 
 function setDarkMode() {
-    document.querySelector('.content').classList.add('dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
 }
 
 function drawMain(mainNodes) {
