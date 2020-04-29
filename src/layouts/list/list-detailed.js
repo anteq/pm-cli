@@ -12,8 +12,8 @@ function build(data, github, link) {
         linkedIssue: link
     });
     if (link) {
-        doc.querySelector('.details__summary--linked-key').classList.remove('hide');
-        doc.querySelector('.details__summary--linked-key').innerHTML = link.key;
+        doc.querySelector('.linked-issue').classList.remove('hide');
+        doc.querySelector('.linked-issue').innerHTML = link.key;
     }    
     doc.dataset.url = data.url;
     doc.addEventListener('click', () => {

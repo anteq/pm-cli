@@ -62,7 +62,7 @@ body {
     background-size: 3.5%;
 }
 
-/* content part */
+/* main content layout */
 
 .main {
     overflow: hidden;
@@ -131,9 +131,58 @@ body {
     overflow: scroll;
 }
 
-/* issue */
 
-.issue {
+/* issue - general */
+
+.icon {
+    height: 10px;
+    width: 10px;
+}
+
+.icon--big {
+    height: 14px;
+    width: 14px;
+}
+
+.issue-status {
+    text-transform: uppercase;
+    font-size: 8px;
+    background-color: lightblue;
+    border-radius: 15%;
+    padding: 3px 6px;
+    letter-spacing: 0.03rem;
+    margin-bottom: 10px;
+    margin-left: 4px;
+}
+
+.issue-status.blue-gray {
+    background-color: #5243AA;
+    border-color: #5243AA;
+    color: #FFFFFF;
+}
+
+.issue-status.yellow {
+    background-color: #0052CC;
+    border-color: #0052CC;
+    color: #FFFFFF;
+}
+
+.issue-status.green {
+    background-color: #00875A;
+    border-color: #00875A;
+    color: #FFFFFF;
+}
+
+.avatar {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+}
+
+
+/* issue - list item */
+
+.list-item {
     display: flex;
     margin-left: -24px;
     padding-left: 24px;
@@ -142,146 +191,69 @@ body {
     cursor: pointer;
 }
 
-.issue:hover {
+.list-item:hover {
     background-color: #eee;
 }
 
-.issue.selected {
+.list-item.selected {
     background-color: #eee;
     color: black;
 }
 
-.dark .issue:hover {
+.dark .list-item:hover {
     background-color: gray;
 }
 
-.dark .issue.selected {
+.dark .list-item.selected {
     background-color: #000;
     color: white !important;
 }
 
-.issue__left {
+.list-item__left {
     width: 30px;
 }
 
-.issue__icon {
-    height: 10px;
-    width: 10px;
-}
-
-.issue__content--status {
-    text-transform: uppercase;
-    font-size: 8px;
-    background-color: lightblue;
-    border-radius: 15%;
-    padding: 3px 6px;
-    letter-spacing: 0.03rem;
-    margin-bottom: 10px;
-    margin-left: 4px;
-}
-
-.issue__content--key.done {
+.issue-key.done {
     text-decoration: line-through;
 }
 
-.issue__content--status.blue-gray {
-    background-color: #5243AA;
-    border-color: #5243AA;
-    color: #FFFFFF;
-}
-
-.issue__content--status.yellow {
-    background-color: #0052CC;
-    border-color: #0052CC;
-    color: #FFFFFF;
-}
-
-.issue__content--status.green {
-    background-color: #00875A;
-    border-color: #00875A;
-    color: #FFFFFF;
-}
-
-/* details */
-
-.details {
-    border-bottom:  1px rgba(0, 0, 0, 0.2) solid;
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-
-.details:hover {
-    background-color: #eee;
-}
-
-.dark .details:hover {
-    background-color: gray;
-}
-
-.details__summary {
-    font-size: 18px;
-    font-weight: 800;
-}
-
-.details__summary--key.done {
-    text-decoration: line-through;
-}
-
-.details__summary--linked-key {
+.linked-issue {
     font-weight: normal;
     font-size: 10px;
 }
 
-.details__summary--linked-key::after {
+.linked-issue::after {
     content: ' 🔗';
     font-size: 8px;
     vertical-align: middle;
 }
 
-.details__summary--status {
-    text-transform: uppercase;
-    font-size: 8px;
-    font-weight: normal;
-    background-color: lightblue;
-    border-radius: 15%;
-    padding: 3px 6px;
-    letter-spacing: 0.03rem;
-    margin-bottom: 10px;
-    margin-left: 4px;
+/* issue - details item */
+
+.details-item {
+    border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
-.details__summary--status.blue-gray {
-    background-color: #5243AA;
-    border-color: #5243AA;
-    color: #FFFFFF;
+.details-item:hover {
+    background-color: #eee;
 }
 
-.details__summary--status.yellow {
-    background-color: #0052CC;
-    border-color: #0052CC;
-    color: #FFFFFF;
+.dark .details-item:hover {
+    background-color: gray;
 }
 
-.details__summary--status.green {
-    background-color: #00875A;
-    border-color: #00875A;
-    color: #FFFFFF;
+.details-item__header {
+    font-size: 18px;
+    font-weight: 800;
 }
 
-.details__title {
+.details-item__title {
     font-size: 14px;
 }
 
-.issue__icon--big {
-    height: 14px;
-    width: 14px;
-}
-
-.issue__avatar {
-    height: 24px;
-    width: 24px;
-    border-radius: 50%;
-}
+/* issue - details item, pr specific */
 
 .pr {
     background-color: rgba(0, 0, 255, 0.02);
@@ -295,7 +267,6 @@ body {
     font-style: normal; 
 }
 
-
 .pr.pr--merged {
     background-color: rgba(0, 255, 0, 0.02);
 }
@@ -305,7 +276,7 @@ body {
 }
 
 
-/* styles */
+/* reusable styles */
 
 .data {
     margin-top: 1px;
