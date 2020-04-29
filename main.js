@@ -70,7 +70,7 @@ function createTray() {
     { type: 'separator' },
     { label: 'Quit', type: 'normal', click: () => app.quit() },
   ]);
-  tray.setToolTip('JIRA spotlight 0.0.1');
+  tray.setToolTip('pm cli 0.3.0');
   tray.setContextMenu(contextMenu);
 }
 

@@ -93,7 +93,6 @@ function buildPrs(detail) {
 
 function buildIssue(response, baseUrl) {
     if (!response.fields) return null;
-    console.debug(response);
     return {
         url: `${baseUrl}/browse/${response.key}`,
         key: response.key,

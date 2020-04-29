@@ -14,7 +14,6 @@ const config = {
 module.exports = config;
 
 function resolveHero(data) {
-    console.debug('hero', data);
     let { text, icon } = data.content;
     let doc = config.template.cloneNode(true);
     if (text) {

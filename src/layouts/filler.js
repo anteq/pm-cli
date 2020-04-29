@@ -2,7 +2,6 @@ const placeholder = { text: '-', class: null, img: null };
 const displayTypes = ['text', 'name', 'color', 'class', 'img', 'icon', 'date'];
 
 function findAndFill(doc, context) {
-    console.debug(doc.querySelectorAll('[data-value]'));
     let allKeys = [...doc.querySelectorAll('[data-value]')].map(x => x.dataset.value);
     for (let key of allKeys) {
         findValueAndFill(key, doc, context)
@@ -31,7 +30,6 @@ function getValue(context, value) {
     if (!value) return placeholder;
     let [key, property] = value.split('.');
     if (Object.keys(context).includes(key)) {
-        console.debug(context, key, property);
         let object = context[key];
         if (typeof object === 'object' && Object.keys(object).includes(property)) {
             if (typeof object[property] === 'object' && Object.keys(object[property]).some(key => displayTypes.includes(key))) {

@@ -45,7 +45,7 @@ function onKeyDown(e) {
 }
 
 function drawLayout() {
-  console.debug('state', state);
+  console.debug('Drawing layout:', state);
   if (state.match.action && typeof state.match.action.layout !== 'undefined') {
     ui.content.classList.remove('hide-main');
     ui.content.classList.add('content--wide');

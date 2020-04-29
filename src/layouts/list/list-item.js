@@ -7,7 +7,6 @@ const template = loadTemplate('src/layouts/list/list-item.html');
 function build(data, isSelected) {
     if (!data) return null;
     let issue = template.cloneNode(true);
-    console.debug(issue);
     
     issue.removeAttribute('id');
     if (isSelected) issue.classList.add('selected');

@@ -14,7 +14,6 @@ function build(issue, state) {
 
     let rank = {};
     let assigneeSprint = devSprint.find(x => x.assignee.jiraId == issue.assignee.id);
-    console.debug('assigneesprint', assigneeSprint);
     let inProgress = assigneeSprint.issues.find(i => i.status === resolutionCategories.IN_PROGRESS) || { issues: [] };
     let toDo = assigneeSprint.issues.find(i => i.status === resolutionCategories.TO_DO) || { issues: [] };
     let issueRankInProgress = inProgress.issues.findIndex(x => x.key === issue.key);
@@ -66,7 +65,7 @@ function build(issue, state) {
     //     }
     // }
 
-    console.debug(doc);
+    console.debug('Details layout', doc);
 
     return doc;
 }
