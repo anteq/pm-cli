@@ -48,10 +48,12 @@ function drawLayout() {
   console.debug('state', state);
   if (state.match.action && typeof state.match.action.layout !== 'undefined') {
     ui.content.classList.remove('hide-main');
+    ui.content.classList.add('content--wide');
     state.layoutConfig = layouts.find(x => x.key === state.match.action.layout);
     ui.drawMain(state.layoutConfig.resolve(state, state.content.selectedIndex));
   } else {
     ui.content.classList.add('hide-main');
+    ui.content.classList.remove('content--wide');
   }
 }
 
