@@ -3,14 +3,20 @@ const { custom, projects } = require('./config');
 
 module.exports = { parse };
 
+function getActionContexts(triggers) {
+    let definition = triggers.join(" ");
+    return [...new Set(Array.from(definition.matchAll(/\{(.*?)\}/gi)).map(x => x[1]))];
+}
+
 function configureSearch() {
     var regexps = [];
     for (let action of actions) {
-        if (projects && action.context === 'project') {
+        let contexts = getActionContexts(action.triggers);
+        if (projects && contexts.includes('project')) {
             for (let project of projects) {
                 pushTriggerRegexps(action, project, project.key.toLowerCase(), regexps);
             }   
-        } else if (custom && action.context === 'custom') {
+        } else if (custom && contexts.includes('custom')) {
             for (let url of custom) {
                 for (let trigger of url.triggers) {
                     pushTriggerRegexps(action, url, trigger, regexps);
