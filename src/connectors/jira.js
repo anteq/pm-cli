@@ -38,7 +38,7 @@ function getCurrentSprint(project) {
 }
 
 function searchIssues(project, jql) {
-    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=10`;
+    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=50`;
     const call = get(url).then(response => {
         return response.data.issues.map(r => buildIssue(r, project.baseUrl));
     });

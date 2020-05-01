@@ -96,7 +96,7 @@ function resolveList(state, _selectedIndex) {
     if (state.content.items) {
         emptyNode(doc, '.column-layout__left');
         for (let i in state.content.items) {
-            appendChild(doc, '.column-layout__left', buildItem(state.content.items[i], i == state.content.selectedIndex));
+            appendChild(doc, '.column-layout__left', buildItem(i, state));
         }
         if (!state.content.details) {
             state.content.selectedIndex = selectedIndex;
