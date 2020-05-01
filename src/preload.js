@@ -18,6 +18,7 @@ function onInit(e) {
   ui.init();
   ui.input.focus();
   if (remote.getGlobal('darkMode')) ui.setDarkMode();
+  parser.init();
   drawLayout();
 }
 

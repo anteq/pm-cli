@@ -2,27 +2,33 @@ const { actions } = require('./actions');
 const config = require('./config');
 const { cartesian } = require('./utils');
 
-module.exports = { parse };
+module.exports = { parse, init };
+
+let search;
 
 function getActionContexts(triggers) {
     let definition = triggers.join(" ");
     return [...new Set(Array.from(definition.matchAll(/\{(.*?)\}/gi)).map(x => x[1]))];
 }
 
+function getPossibleValues(slugs) {
+    return slugs.map(slug => {
+        return config[config.slugs.find(s => s.slug === slug).values].map( configItem => {
+            return {
+                slug,
+                value: configItem
+            };
+        });
+    });
+}
+
 function configureSearch() {
     var regexps = [];
     for (let action of actions) {
         let slugs = getActionContexts(action.triggers);
-        let options = slugs.map(slug => {
-            return config[config.slugs.find(s => s.slug === slug).values].map( configItem => {
-                return {
-                    slug,
-                    value: configItem
-                };
-            });
-        });
-        let allOptions = cartesian(...options);
-        for (let option of allOptions) {
+        let valuesPerEachSlug = getPossibleValues(slugs);
+        let valuesCombined = cartesian(...valuesPerEachSlug);
+        for (let option of valuesCombined) {
             pushTriggerRegexps(action, option, regexps)
         }
     }
@@ -43,8 +49,12 @@ function pushTriggerRegexps(action, optionConfig, regexps) {
     }
 }
 
+function init() {
+    search = configureSearch();
+}
+
 function parse(raw) {
-    let search = configureSearch();
+    if (!search) throw new Error('Parser not initialized');
     for (let action of search) {
         const match = raw.match(action.regexp);
         if (match) {
