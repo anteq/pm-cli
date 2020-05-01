@@ -4,7 +4,6 @@ const config = {
     key: 'openCustom',
     name: 'Open Custom URL',
     icon: '🌐',
-    context: 'custom',
     triggers: ['{custom}'],
     arguments: false,
     layout: 'hero',

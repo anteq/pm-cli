@@ -6,7 +6,6 @@ const config = {
     key: 'addIssue',
     name: 'Create new issue',
     icon: '🔖',
-    context: 'project',
     triggers: ['{project} new', '{project} create', '{project} add'],
     arguments: true,
     layout: 'hero',

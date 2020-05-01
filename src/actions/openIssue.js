@@ -5,7 +5,6 @@ const config = {
     key: 'openIssue',
     name: 'Open issue by code',
     icon: '🚪',
-    context: 'project',
     triggers: ['{project}-'],
     arguments: true,
     layout: 'list',

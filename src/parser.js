@@ -1,5 +1,6 @@
 const { actions } = require('./actions');
-const { custom, projects } = require('./config');
+const config = require('./config');
+const { cartesian } = require('./utils');
 
 module.exports = { parse };
 
@@ -11,29 +12,33 @@ function getActionContexts(triggers) {
 function configureSearch() {
     var regexps = [];
     for (let action of actions) {
-        let contexts = getActionContexts(action.triggers);
-        if (projects && contexts.includes('project')) {
-            for (let project of projects) {
-                pushTriggerRegexps(action, project, project.key.toLowerCase(), regexps);
-            }   
-        } else if (custom && contexts.includes('custom')) {
-            for (let url of custom) {
-                for (let trigger of url.triggers) {
-                    pushTriggerRegexps(action, url, trigger, regexps);
-                }
-            }
+        let slugs = getActionContexts(action.triggers);
+        let options = slugs.map(slug => {
+            return config[config.slugs.find(s => s.slug === slug).values].map( configItem => {
+                return {
+                    slug,
+                    value: configItem
+                };
+            });
+        });
+        let allOptions = cartesian(...options);
+        for (let option of allOptions) {
+            pushTriggerRegexps(action, option, regexps)
         }
     }
     return regexps;
 }
 
-function pushTriggerRegexps(action, context, replacement, regexps) {
+function pushTriggerRegexps(action, optionConfig, regexps) {
+    // optionConfig: [{ slug: string, value: [ key: string, ... ] }]
     for (let trigger of action.triggers) {
-        var regexObject = {
-            action,
-            regexp: new RegExp('^' + trigger.replace(`{${action.context}}`, replacement) + '(.*)', 'i')
-        };
-        regexObject[action.context] = context;
+        var regexObject = { action };
+        var regexString = trigger;
+        for (let valueToBeReplaced of optionConfig) {
+            regexObject[valueToBeReplaced.slug] = valueToBeReplaced.value;
+            regexString = regexString.replace(`{${valueToBeReplaced.slug}}`, valueToBeReplaced.value.key);
+        }
+        regexObject['regexp'] = new RegExp('^' + regexString + '(.*)', 'i');
         regexps.push(regexObject);
     }
 }

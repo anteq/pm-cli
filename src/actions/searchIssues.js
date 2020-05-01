@@ -5,7 +5,6 @@ const config = {
     key: 'searchIssues',
     name: 'Search issues',
     icon: '🔍',
-    context: 'project',
     triggers: ['{project} '],
     arguments: true,
     layout: 'list',

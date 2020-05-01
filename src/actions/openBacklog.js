@@ -4,7 +4,6 @@ const config = {
     key: 'openBacklog',
     name: 'See backlog',
     icon: '📚',
-    context: 'project',
     triggers: ['{project} backlog'],
     arguments: false,
     layout: 'hero',

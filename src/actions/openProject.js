@@ -4,7 +4,6 @@ const config = {
     key: 'openProject',
     name: 'Open project by code',
     icon: '🚪',
-    context: 'project',
     triggers: ['{project}'],
     arguments: false,
     layout: 'hero',
