@@ -15,7 +15,7 @@
 }
 
 body {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 .wrapper {
@@ -211,6 +211,16 @@ body {
     cursor: pointer;
 }
 
+.list-item__content.green .issue-key {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.list-item__content.green .issue-summary {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
 .list-item:hover {
     background-color: var(--hover-bg-color);
 }
@@ -225,7 +235,6 @@ body {
 }
 
 .linked-issue {
-    font-weight: normal;
     font-size: 10px;
 }
 
@@ -299,7 +308,6 @@ body {
 .data .data__value {
     font-size: 11px;
     font-style: normal;
-    font-weight: normal;
 }
 
 .data .data__label {
@@ -309,9 +317,8 @@ body {
 }
 
 .text-title {
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
-    font-weight: normal;
 }
 
 .text-sub {
@@ -333,6 +340,12 @@ body {
     font-size: 0.6rem;
     letter-spacing: 0.05rem;
     text-transform: uppercase;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* spinner */
