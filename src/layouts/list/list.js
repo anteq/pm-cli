@@ -35,24 +35,25 @@ function getDetails(state, issue) {
         links: { loading: true, data: null }
     }
     setTimeout(() => {
-        // todo fix base url - get from config
 
-        jira.getIssue({baseUrl: 'https://scalaric.atlassian.net'}, issue.key).then((result) => {
+        jira.getIssue(state.match.project, issue.key).then((result) => {
             console.debug('🌐 got issue details');
             state.content.details.issue.loading = false;
             state.content.details.issue.data = result;
             state.drawLayout();
         });
 
-        jira.getGithubInfo({baseUrl: 'https://scalaric.atlassian.net'}, issue.id).then(result => {
-            console.debug('🌐 got gh info about issue');
-            state.content.details.github.loading = false;
-            state.content.details.github.data = result;
-            state.drawLayout();
-        });
-
+        if (state.match.project.dev) {
+            jira.getGithubInfo(state.match.project, issue.id).then(result => {
+                console.debug('🌐 got gh info about issue');
+                state.content.details.github.loading = false;
+                state.content.details.github.data = result;
+                state.drawLayout();
+            });
+        }
+    
         if (issue.links) {
-            jira.getIssues({baseUrl: 'https://scalaric.atlassian.net'}, issue.links.map(x => x.issue)).then(result => {
+            jira.getIssues(state.match.project, issue.links.map(x => x.issue)).then(result => {
                 console.debug('🌐 got issue links');
                 state.content.details.links.loading = false;
                 state.content.details.links.data = result;
@@ -67,7 +68,7 @@ function getDetails(state, issue) {
 
 function getCurrentDevSprint(state) {
     state.devSprint.loading = true;
-    jira.getCurrentSprint({baseUrl: 'https://scalaric.atlassian.net', key: 'TM'}).then(result => {
+    jira.getCurrentSprint(state.match.project).then(result => {
         console.debug('🌐 got current dev sprint data');
         let statuses = [...new Set(result.map(t => t.status.category))];
         developers = people.map(p => {
