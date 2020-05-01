@@ -31,8 +31,8 @@ function getValue(context, value) {
     let [key, property] = value.split('.');
     if (Object.keys(context).includes(key)) {
         let object = context[key];
-        if (typeof object === 'object' && Object.keys(object).includes(property)) {
-            if (typeof object[property] === 'object' && Object.keys(object[property]).some(key => displayTypes.includes(key))) {
+        if (typeof object === 'object' && object[property] !== null && Object.keys(object).includes(property)) {
+            if (typeof object[property] === 'object' && object[property] !== null && Object.keys(object[property]).some(key => displayTypes.includes(key))) {
                 return object[property];
             } else {
                 return { text: object[property] };       
