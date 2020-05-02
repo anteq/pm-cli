@@ -2,11 +2,43 @@ const placeholder = { text: '-', class: null, img: null };
 const displayTypes = ['text', 'name', 'color', 'class', 'img', 'icon', 'date'];
 
 function findAndFill(doc, context) {
+    fillArrays(doc, context);
+    fillSingles(doc, context);
+    return doc;
+}
+
+function fillArrays(doc, context) {
+    let allArrays = [...doc.querySelectorAll('[data-each]')].map(x => x.dataset.each);
+    for (let key of allArrays) {
+        cloneAndFillArray(key, doc, context);
+    }
+}
+
+function fillSingles(doc, context) {
+    findKeysAndFill(doc, context);
+}
+
+function findKeysAndFill(doc, context) {
     let allKeys = [...doc.querySelectorAll('[data-value]')].map(x => x.dataset.value);
     for (let key of allKeys) {
         findValueAndFill(key, doc, context)
     }
-    return doc;
+}
+
+function cloneAndFillArray(key, doc, context) {
+    let node = doc.querySelector(`[data-each~="${key}"]`);
+    if (node) {
+        if (context[key] && Array.isArray(context[key])) {
+            for (let i in context[key]) {
+                var valueNode = node.cloneNode(true);
+                var localContext = {...context, comment: context[key][i]};
+                localContext[key] = context[key][i];
+                findKeysAndFill(valueNode, localContext);
+                node.parentNode.appendChild(valueNode);
+            }
+        }
+    }
+    node.remove();
 }
 
 function findValueAndFill(key, doc, context) {

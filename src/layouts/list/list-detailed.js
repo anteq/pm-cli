@@ -38,7 +38,8 @@ function build(issue, state) {
 
     findAndFill(doc, {
         issue,
-        rank
+        rank,
+        comment: issue.comments.slice(0, 3)
     }); 
 
     doc.dataset.url = issue.url;

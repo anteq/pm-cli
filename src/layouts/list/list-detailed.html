@@ -14,10 +14,9 @@
         <span data-value="issue.created" data-type="date">5 days ago</span>
       </span>
     </div>
-
-    <div class="comment data hide">
-      <span class="data__label">Last comment: <span class="data__label"  data-value="issue.lastCommentAuthor" data-type="text">Sami Joseph</span>, <span class="data__label" data-value="issue.lastCommentTime" data-type="date">5 days ago</span></span>
-      <span class="data__value" data-value="issue.lastCommentText" data-type="text">Wow amazing lol</span>
+    <div class="comment data" data-each="comment">
+      <span class="data__label">Last comment: <span class="data__label" data-value="comment.author" data-type="text">Sami Joseph</span>, <span class="data__label" data-value="comment.created" data-type="date">5 days ago</span></span>
+      <span class="data__value" data-value="comment.text" data-type="text">Wow amazing lol</span>
     </div>
     <div class="pr hide">
       <div class="pr__header">
