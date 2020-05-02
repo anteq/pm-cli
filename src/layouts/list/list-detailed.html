@@ -18,15 +18,20 @@
       <span class="data__label">Last comment: <span class="data__label" data-value="comment.author" data-type="text">Sami Joseph</span>, <span class="data__label" data-value="comment.created" data-type="date">5 days ago</span></span>
       <span class="data__value" data-value="comment.text" data-type="text">Wow amazing lol</span>
     </div>
-    <div class="pr hide">
-      <div class="pr__header">
-        <span class="pr__header--title" data-value="pr.id" data-type="text">#580</span>
-        <span class="pr__header--status" data-value="pr.status" data-type="text">merged</span>
-        <span class="pr__header--sub" data-value="pr.created" data-type="date">created 5 hours ago</span>
+    <div data-each="pr">
+      <div class="pr" data-value="pr.status" data-type="class">
+        <div class="pr__header">
+          <div class="github-logo"></div>
+          <span class="pr__header--title" data-value="pr.id" data-type="text">#580</span>
+          <span class="pr__header--status" data-value="pr.status" data-type="text">merged</span>
+          Last update: 
+          <span class="pr__header--sub" data-value="pr.updated" data-type="date">5 hours ago</span>
+        </div>
+        <div class="pr__links hide">
+          <button class="pr__links--app">AP</button><button class="pr__links--creator">CP</button><button class="pr__links--collaborator">BP</button>
+        </div>
       </div>
-      <div class="pr__links hide">
-        <button class="pr__links--app">AP</button><button class="pr__links--creator">CP</button><button class="pr__links--collaborator">BP</button>
-      </div>
+
     </div>
   </div>
   <div class="details-item__right">

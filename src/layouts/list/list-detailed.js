@@ -39,7 +39,8 @@ function build(issue, state) {
     findAndFill(doc, {
         issue,
         rank,
-        comment: issue.comments.slice(0, 3)
+        comment: issue.comments.slice(0, 3),
+        pr: (github && github[issue.key]) ? github[issue.key].prs : null
     }); 
 
     doc.dataset.url = issue.url;

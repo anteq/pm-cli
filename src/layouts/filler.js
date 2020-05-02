@@ -48,7 +48,7 @@ function findValueAndFill(key, doc, context) {
         let value = getValue(context, node.dataset.value);
         node.dataset.filled = true;
         if (types.includes('text')) node.innerHTML = value.text || value.name;
-        if (types.includes('class')) node.classList.add(value.class || value.color);
+        if (types.includes('class')) node.classList.add(value.class || value.color || value.text);
         if (types.includes('img')) node.setAttribute('src', value.img || value.icon);
         if (types.includes('date')) node.innerHTML = typeof value.text.fromNow === 'function' ? value.text.fromNow() : '-';
         if (doc.querySelector(`[data-value~="${key}"]:not([data-filled])`)) {

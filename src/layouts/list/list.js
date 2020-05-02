@@ -43,11 +43,13 @@ function getDetails(state, issue) {
             state.drawLayout();
         });
 
-        if (state.match.project.dev) {
+        console.debug(state.match.project);
+        if (state.match.project.github) {
             jira.getGithubInfo(state.match.project, issue.id).then(result => {
                 console.debug('🌐 got gh info about issue');
                 state.content.details.github.loading = false;
-                state.content.details.github.data = result;
+                if (!state.content.details.github.data) state.content.details.github.data = {};
+                state.content.details.github.data[issue.key] = result;
                 state.drawLayout();
             });
         }
@@ -59,6 +61,15 @@ function getDetails(state, issue) {
                 state.content.details.links.data = result;
                 state.drawLayout();
             });
+            for (let link of issue.links) {
+                // todo: only for github true projects
+                jira.getGithubInfo(state.match.project, link.issue.id).then(result => {
+                    console.debug('🌐 got gh info about issue');
+                    if (!state.content.details.github.data) state.content.details.github.data = {};
+                    state.content.details.github.data[link.issue.key] = result;
+                    state.drawLayout();
+                });
+            }
         } else {
             state.content.details.links.loading = false;
         }

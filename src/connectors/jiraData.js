@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { people } = require('../config');
 
 const fields = ['created', 'modified', 'id', 'issuetype', 'key', 'priority', 'status', 'reporter', 'assignee', 'sprint', 'issuelinks', 'summary', 'comment', 'customfield_10500'];
 
@@ -140,7 +141,8 @@ function buildLink(link) {
             summary: issue.fields.summary,
             status: buildStatus(issue.fields),
             priority: buildPriority(issue.fields),
-            issuetype: buildIssueType(issue.fields)
+            issuetype: buildIssueType(issue.fields),
+            id: issue.id
         }
     };
 }
@@ -154,11 +156,18 @@ function buildComments(fields) {
                     id: x.updateAuthor ? x.updateAuthor.accountId : null,
                     img: x.updateAuthor ? x.updateAuthor.avatarUrls['48x48'] : null
                 },
-                text: x.body,
+                text: parsePeopleInText(x.body),
                 created: moment(x.updated)
             };
         }).reverse();
     } else {
         return null;
     }
+}
+
+function parsePeopleInText(body) {
+    for (let person of people) {
+        body = body.replace(`[~accountid:${person.jiraId}]`, person.name);
+    }
+    return body;
 }
