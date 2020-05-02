@@ -1,6 +1,8 @@
 const moment = require('moment');
 
-module.exports = { buildGithubInfo, buildIssue };
+const fields = ['created', 'modified', 'id', 'issuetype', 'key', 'priority', 'status', 'reporter', 'assignee', 'sprint', 'issuelinks', 'summary', 'comment', 'customfield_10500'];
+
+module.exports = { buildGithubInfo, buildIssue, fields };
 
 function buildGithubInfo(response) {
     if (!response.detail[0]) return null;

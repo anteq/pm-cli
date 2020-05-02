@@ -1,6 +1,6 @@
 const { api } = require('../config');
 const rest = require('../rest');
-const { buildGithubInfo, buildIssue } = require('./jiraData');
+const { fields, buildGithubInfo, buildIssue } = require('./jiraData');
 
 const auth = {
     'Authorization': 'Basic ' + Buffer.from(api.jira.login + ":" + api.jira.key).toString("base64")
@@ -20,7 +20,7 @@ function getIssue(project, issue) {
 
 function getIssues(project, issues) {
     const jql = issues.map(x => `key = ${x.key}`).join(' OR ');
-    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}`;
+    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&fields=${fields.join(',')}`;
     return get(url).then(response => {
         return response.data.issues.map(r => buildIssue(r, project.baseUrl));
     });
@@ -38,7 +38,7 @@ function getCurrentSprint(project) {
 }
 
 function searchIssues(project, jql) {
-    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=50`;
+    const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=50&fields=${fields.join(',')}`;
     const call = get(url).then(response => {
         return response.data.issues.map(r => buildIssue(r, project.baseUrl));
     });
