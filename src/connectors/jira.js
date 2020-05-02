@@ -26,8 +26,9 @@ function getIssues(project, issues) {
     });
 }
 
-function getCurrentSprint(project) {
-    const jql = `project = "${project.key}" and sprint in openSprints() and status != "Done" order by rank asc`
+function getCurrentSprint(project, developer) {
+    // developer: optional
+    const jql = `project = "${project.key}" and sprint in openSprints() and status != "Done" ${developer ? 'and assignee = ' + developer.jiraId + ' ' : ''} order by rank asc`
     const url = `${project.baseUrl}/rest/api/2/search?jql=${escape(jql)}&maxResults=100`;
     return rest.all([get(url), get(url + '&startAt=100')]).then(response => {
         // todo: handle more and handle nicer
