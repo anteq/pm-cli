@@ -32,7 +32,7 @@ function post(url, headers, body) {
 }
 
 function all(promises) {
-    return axios.all(promises);
+    return new ApiCall(axios.all(promises), () => promises.forEach(p => p.cancel()));
 }
 
 module.exports = { get, post, all };
