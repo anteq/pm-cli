@@ -1,5 +1,5 @@
 const placeholder = { text: '-', class: null, img: null };
-const displayTypes = ['text', 'name', 'color', 'class', 'img', 'icon', 'date'];
+const displayTypes = ['text', 'name', 'color', 'class', 'img', 'icon', 'date', 'alt'];
 
 function findAndFill(doc, context) {
     fillArrays(doc, context);
@@ -51,6 +51,7 @@ function findValueAndFill(key, doc, context) {
         if (types.includes('class')) node.classList.add(value.class || value.color || value.text);
         if (types.includes('img')) node.setAttribute('src', value.img || value.icon);
         if (types.includes('date')) node.innerHTML = typeof value.text.fromNow === 'function' ? value.text.fromNow() : '-';
+        if (types.includes('alt')) node.setAttribute('alt', value.text || value.name);
         if (doc.querySelector(`[data-value~="${key}"]:not([data-filled])`)) {
             // recursively find another one to fill
             findValueAndFill(key, doc, context);

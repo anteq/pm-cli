@@ -167,7 +167,8 @@ function buildComments(fields) {
 
 function parsePeopleInText(body) {
     for (let person of people) {
-        body = body.replace(`[~accountid:${person.jiraId}]`, person.name);
+        body = body.replace(`[~accountid:${person.jiraId}]`, '@' + person.name);
     }
+    body = body.replace(/\[\~accountid\:.*\]/g, '@User')
     return body;
 }

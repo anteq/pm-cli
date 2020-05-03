@@ -14,9 +14,10 @@
         <span data-value="issue.created" data-type="date">5 days ago</span>
       </span>
     </div>
-    <div class="comment data" data-each="comment">
-      <span class="data__label">Last comment: <span class="data__label" data-value="comment.author" data-type="text">Sami Joseph</span>, <span class="data__label" data-value="comment.created" data-type="date">5 days ago</span></span>
+    <div class="comment ellipsis data" data-each="comment">
+      <img class="small-avatar" data-value="comment.author" data-type="img alt"></img>
       <span class="data__value" data-value="comment.text" data-type="text">Wow amazing lol</span>
+      <span class="data__label" data-value="comment.created" data-type="date">5 days ago</span>
     </div>
     <div data-each="pr">
       <div class="pr" data-value="pr.status" data-type="class">

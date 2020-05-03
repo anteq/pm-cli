@@ -197,6 +197,12 @@ body {
     border-radius: 50%;
 }
 
+.small-avatar {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+}
+
 .done {
     text-decoration: line-through;
 }
@@ -256,10 +262,12 @@ body {
 
 .details-item__left {
     flex: 4;
+    min-width: 0;
 }
 
 .details-item__right {
     flex: 1;
+    min-width: 0;
 }
 
 .details-item:hover {
@@ -287,6 +295,15 @@ body {
     font-size: 11px;
     color: rgb(137, 147, 164);
     font-style: normal; 
+}
+
+.pr__header {
+    display: flex;
+    align-items: center;
+}
+
+.pr__header * {
+    margin: 3px;
 }
 
 .pr.pr--merged {
