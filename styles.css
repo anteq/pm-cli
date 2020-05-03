@@ -137,8 +137,7 @@ body {
     margin-left: -20px;
 }
 
-.column-layout__left::before {
-    content: 'Search results:';
+.column-layout__left .list-header {
     display: inline-block;
     padding-bottom: 5px;
     font-size: 0.6rem;

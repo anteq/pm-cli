@@ -32,4 +32,4 @@ function cartesian(a, b, ...c) {
     return final;
 }
 
-module.exports = { loadTemplate, emptyNode, appendChild, cartesian };
+module.exports = { loadTemplate, emptyNode, appendChild, setLoading, cartesian };

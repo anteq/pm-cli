@@ -2,7 +2,7 @@ const jira = require('../../connectors/jira');
 const { shell } = require('electron');
 const { build: buildItem } = require('./list-item');
 const { build: buildDetails } = require('./list-detailed');
-const { loadTemplate, emptyNode, appendChild } = require('../../utils');
+const { loadTemplate, emptyNode, appendChild, setLoading } = require('../../utils');
 const { people } = require('../../config'); 
 
 const config = {
@@ -104,29 +104,30 @@ function resolveList(state, _selectedIndex) {
     let doc = config.template.cloneNode(true);
     let selectedIndex = _selectedIndex || 0;
     
+    emptyNode(doc, '.list');
     if (state.content.items) {
-        emptyNode(doc, '.column-layout__left');
         for (let i in state.content.items) {
-            appendChild(doc, '.column-layout__left', buildItem(i, state));
+            appendChild(doc, '.list', buildItem(i, state));
         }
+        emptyNode(doc, '.details');
         if (!state.content.details) {
             state.content.selectedIndex = selectedIndex;
+            setLoading(doc, '.details');
             getDetails(state, state.content.items[state.content.selectedIndex]);
         }
-        if (state.content.details.issue) {
-            emptyNode(doc, '.column-layout__right');
-            appendChild(doc, '.column-layout__right', buildDetails(state.content.details.issue.data, state));
+        if (state.content.details.issue && state.content.details.issue.data) {
+            appendChild(doc, '.details', buildDetails(state.content.details.issue.data, state));
             if (state.content.details.links) {
                 for (let i in state.content.details.links.data) {
-                    // todo need to download gh data about links
-                    appendChild(doc, '.column-layout__right', buildDetails(state.content.details.links.data[i], state));
+                    appendChild(doc, '.details', buildDetails(state.content.details.links.data[i], state));
                 }
             }
         }
         if (!state.devSprint.loading && !state.devSprint.data) {
             getCurrentDevSprint(state);
         }
-        
+    } else {
+        setLoading(doc, '.list');
     }
     
     return doc;
