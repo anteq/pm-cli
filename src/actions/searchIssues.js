@@ -14,11 +14,16 @@ module.exports = config;
 
 let call;
 
+let cancel = function() {
+    if (call) call.cancel();
+}
+
 function resolveSearch(state) {
     setTimeout(() => callSearch(state));
     return {
         url: createSearchUrl(state.match.project, state.match.input),
-        text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: state.match.project.key.toUpperCase() })
+        text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: state.match.project.key.toUpperCase() }),
+        cancel
     };
 }
 

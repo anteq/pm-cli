@@ -13,10 +13,15 @@ module.exports = config;
 
 let call;
 
+let cancel = function() {
+    if (call) call.cancel();
+}
+
 function resolveSearch(state) {
     setTimeout(() => callSearch(state));
     return {
-        url: createSearchUrl(state.match.project, state.match.input)
+        url: createSearchUrl(state.match.project, state.match.input),
+        cancel
     };
 }
 

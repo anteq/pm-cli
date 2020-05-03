@@ -12,21 +12,28 @@ const config = {
 };
 module.exports = config;
 
+let call;
+
+let cancel = function() {
+    if (call) call.cancel();
+}
+
 function resolveOpen(state) {
     const no = parseInt(state.match.input);
     const issue = state.match.project.key.toUpperCase() + (isNaN(no) ? '' : `-${no}`)
     setTimeout(() => { callGetIssue(state, issue); })
     return {
         url: `${state.match.project.baseUrl}/browse/${issue}`,
-        text: wrap(`Open {issue}`, {issue})      
+        text: wrap(`Open {issue}`, {issue}),
+        cancel: cancel   
     };
 }
 
 function callGetIssue(state, issue) {
-    jira.getIssue(state.match.project, issue).then(
-        (result) => {
-            state.content.items = [result];
-            state.drawLayout();
-        }
-    );
+    if (call) call.cancel();
+    call = jira.getIssue(state.match.project, issue);
+    call.then((result) => {
+        state.content.items = [result];
+        state.drawLayout();
+    });
 }

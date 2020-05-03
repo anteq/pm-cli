@@ -27,6 +27,7 @@ async function onKeyUp(e) {
     state.raw = ui.input.value;
     state.match = parseInput();
     if (state.match) {
+      if (state.content && state.content.cancel) state.content.cancel();
       state.content = await resolveAction();
       drawLayout();
     }
