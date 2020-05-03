@@ -42,7 +42,8 @@ function pushTriggerRegexps(action, optionConfig, regexps) {
         var regexString = trigger;
         for (let valueToBeReplaced of optionConfig) {
             regexObject[valueToBeReplaced.slug] = valueToBeReplaced.value;
-            regexString = regexString.replace(`{${valueToBeReplaced.slug}}`, valueToBeReplaced.value.key);
+            let values = [valueToBeReplaced.value.key, ...valueToBeReplaced.value.triggers ? valueToBeReplaced.value.triggers : []];
+            regexString = regexString.replace(`{${valueToBeReplaced.slug}}`, values.length > 1 ? ('(' + values.join('|') + ')') : values[0] );
         }
         regexObject['regexp'] = new RegExp('^' + regexString + '(.*)', 'i');
         regexps.push(regexObject);
