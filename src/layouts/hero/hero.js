@@ -15,7 +15,7 @@ module.exports = config;
 
 function resolveHero(data) {
     let { text, icon } = data.content;
-    let doc = config.template.cloneNode(true);
+    let doc = config.template.load().cloneNode(true);
     if (text) {
         doc.querySelector('.hero-layout__description').innerHTML = text || '';
         doc.querySelector('.hero-layout__icon').innerHTML = icon || '';

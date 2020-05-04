@@ -8,7 +8,7 @@ function build(i, state) {
     if (!data) return null;
     let isSelected = i == state.content.selectedIndex;
 
-    let issue = template.cloneNode(true);
+    let issue = template.load().cloneNode(true);
     
     issue.removeAttribute('id');
     if (isSelected) issue.classList.add('selected');

@@ -10,7 +10,7 @@ function build(issue, state) {
     let github = state.content.details.github ? state.content.details.github.data : {};
     let devSprint = state.devSprint ? (state.devSprint.data || []) : [];
 
-    let doc = template.cloneNode(true);
+    let doc = template.load().cloneNode(true);
 
     let rank = {};
     if (devSprint) {

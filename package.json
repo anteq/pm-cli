@@ -48,6 +48,7 @@
       ]
     },
     "extraResources": [
+      "src/**/*.html",
       "./assets/**",
       "./schema.json"
     ]

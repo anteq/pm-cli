@@ -13,6 +13,10 @@ function getAssetPath(assetPath) {
   return app.isPackaged ? path.join(process.resourcesPath, assetPath) : assetPath;
 }
 
+function setAssetPath() {
+  global.assetPath = getAssetPath('') + '/';
+}
+
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1200,
@@ -39,6 +43,7 @@ app.on('ready', () => {
   registerShortcut();
   setDarkMode();
   createConfig();
+  setAssetPath();
 })
 
 function createConfig() {

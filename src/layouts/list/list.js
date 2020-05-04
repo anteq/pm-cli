@@ -101,7 +101,7 @@ function getCurrentDevSprint(state) {
 }
 
 function resolveList(state, _selectedIndex) {
-    let doc = config.template.cloneNode(true);
+    let doc = config.template.load().cloneNode(true);
     let selectedIndex = _selectedIndex || 0;
     
     emptyNode(doc, '.list');
