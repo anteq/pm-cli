@@ -7,7 +7,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const Store = require('electron-store');
 
-const DEBUG = true;
+const DEBUG = false;
 
 function getAssetPath(assetPath) {
   return app.isPackaged ? path.join(process.resourcesPath, assetPath) : assetPath;
