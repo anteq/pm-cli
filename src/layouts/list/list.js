@@ -1,4 +1,5 @@
 const jira = require('../../connectors/jira');
+const github = require('../../connectors/github');
 const { shell } = require('electron');
 const { build: buildItem } = require('./list-item');
 const { build: buildDetails } = require('./list-detailed');
@@ -32,6 +33,7 @@ function getDetails(state, issue) {
     state.content.details = {
         issue: { loading: true, data: null },
         github: { loading: true, data: null },
+        githubPulls: { loading: true, data: null },
         links: { loading: true, data: null }
     }
     setTimeout(() => {
@@ -43,12 +45,15 @@ function getDetails(state, issue) {
             state.drawLayout();
         });
 
-        console.debug(state.match.project);
         if (state.match.project.github) {
             jira.getGithubInfo(state.match.project, issue.id).then(result => {
-                console.debug('🌐 got gh info about issue');
+                console.debug('🌐 got gh info about issue', result);
                 state.content.details.github.loading = false;
                 if (!state.content.details.github.data) state.content.details.github.data = {};
+                let openPRs = (result.prs || []).filter(x => x.status === 'OPEN');
+                    for (let openPR of openPRs) {
+                        getPR(state, openPR);
+                    }
                 state.content.details.github.data[issue.key] = result;
                 state.drawLayout();
             });
@@ -64,9 +69,13 @@ function getDetails(state, issue) {
             for (let link of issue.links) {
                 // todo: only for github true projects
                 jira.getGithubInfo(state.match.project, link.issue.id).then(result => {
-                    console.debug('🌐 got gh info about issue');
+                    console.debug('🌐 got gh info about link', result);
                     if (!state.content.details.github.data) state.content.details.github.data = {};
                     state.content.details.github.data[link.issue.key] = result;
+                    let openPRs = (result.prs || []).filter(x => x.status === 'OPEN');
+                    for (let openPR of openPRs) {
+                        getPR(openPR);
+                    }
                     state.drawLayout();
                 });
             }
@@ -74,6 +83,14 @@ function getDetails(state, issue) {
             state.content.details.links.loading = false;
         }
 
+    })
+}
+
+function getPR(state, pr) {
+    github.getPullById(pr.repo, pr.id).then(result => {
+        if (!state.content.details.githubPulls.data) state.content.details.githubPulls.data = {};
+        state.content.details.githubPulls.data[pr.id] = result;
+        console.debug('🌐 got gh info about pr', result);
     })
 }
 

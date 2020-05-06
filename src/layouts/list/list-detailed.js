@@ -9,6 +9,7 @@ function build(issue, state) {
     if (!issue) return null;
     let github = state.content.details.github ? state.content.details.github.data : {};
     let devSprint = state.devSprint ? (state.devSprint.data || []) : [];
+    let githubPulls = state.content.details.githubPulls ? state.content.details.githubPulls.data : {};
 
     let doc = template.load().cloneNode(true);
 
@@ -36,11 +37,26 @@ function build(issue, state) {
         }
     }
 
+    let pr = null;
+    if (github) {
+        if (githubPulls) {
+            pr = (github[issue.key].prs || []).map(p => {
+                let details = githubPulls[p.id];
+                return {
+                    ...p,
+                    ...details
+                };
+            });
+        } else {
+            pr = github[issue.key].prs;
+        }
+    }
+
     findAndFill(doc, {
         issue,
         rank,
         comment: issue.comments.slice(0, 3),
-        pr: (github && github[issue.key]) ? github[issue.key].prs : null
+        pr
     }); 
 
     doc.dataset.url = issue.url;

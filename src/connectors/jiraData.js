@@ -56,9 +56,10 @@ function buildPrs(detail) {
     return detail.pullRequests.map(x => {
         return {
             author: x.author.name,
-            id: x.id,
+            id: x.id.replace('#', ''),
             name: x.name,
             url: x.url,
+            repo: x.url.replace('https://github.com/', '').replace(/\/pull.*$/, ''),
             updated: moment(x.lastUpdate),
             status: x.status
         };

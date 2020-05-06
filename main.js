@@ -7,14 +7,14 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const Store = require('electron-store');
 
-const DEBUG = false;
+const DEBUG = true;
 
 function getAssetPath(assetPath) {
   return app.isPackaged ? path.join(process.resourcesPath, assetPath) : assetPath;
 }
 
 function setAssetPath() {
-  global.assetPath = getAssetPath('') + '/';
+  global.assetPath = getAssetPath('');
 }
 
 function createWindow() {

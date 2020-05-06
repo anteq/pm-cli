@@ -1,12 +1,13 @@
 const { remote } = require('electron');
 const fs = require('fs');
+const path = require('path');
 const parser = new DOMParser();
 const spinner = parser.parseFromString('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>', 'text/html').childNodes[0];
 
 function loadTemplate(uri) {
     return {
         load: () => {
-            let file = fs.readFileSync(remote.getGlobal('assetPath') + uri, 'utf8');
+            let file = fs.readFileSync(path.join(remote.getGlobal('assetPath'), uri), 'utf8');
             let doc = parser.parseFromString(file, 'text/html');
             return doc.querySelector('body').childNodes[0];
         }
