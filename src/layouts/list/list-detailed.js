@@ -73,7 +73,7 @@ function build(issue, state) {
             pr.filter(x => x.status === 'OPEN').forEach(p => {
                 button.push({
                     text: `Open PR #${p.id}`,
-                    url: pr.url
+                    url: p.url
                 });
             });
         }
