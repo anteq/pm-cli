@@ -262,7 +262,7 @@ body {
 }
 
 .details-item__left {
-    flex: 4;
+    flex: 3;
     min-width: 0;
     margin-right: 10px;
 }
