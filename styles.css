@@ -304,14 +304,12 @@ body {
 /* issue - details item, pr specific */
 
 .pr {
-    background-color: rgba(0, 0, 255, 0.02);
     border: 1px rgba(0, 0, 0, 0.2) solid;
     border-radius: 4px;
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 11px;
-    color: rgb(137, 147, 164);
     font-style: normal; 
 }
 
@@ -322,14 +320,6 @@ body {
 
 .pr__header * {
     margin: 3px;
-}
-
-.pr.pr--merged {
-    background-color: rgba(0, 255, 0, 0.02);
-}
-
-.pr.pr--failed {
-    background-color: rgba(255, 0, 0, 0.02);
 }
 
 .github-logo {

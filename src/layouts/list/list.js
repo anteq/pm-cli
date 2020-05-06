@@ -91,6 +91,7 @@ function getPR(state, pr) {
         if (!state.content.details.githubPulls.data) state.content.details.githubPulls.data = {};
         state.content.details.githubPulls.data[pr.id] = result;
         console.debug('🌐 got gh info about pr', result);
+        state.drawLayout();
     })
 }
 
