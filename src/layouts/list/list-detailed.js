@@ -13,6 +13,13 @@ function build(issue, state) {
 
     let doc = template.load().cloneNode(true);
 
+    let button = [
+        {
+            text: 'Open task',
+            url: issue.url
+        }
+    ];
+
     let rank = {};
     if (devSprint) {
         let assigneeSprint = devSprint.find(x => x.assignee.jiraId == issue.assignee.id);
@@ -38,7 +45,7 @@ function build(issue, state) {
     }
 
     let pr = null;
-    if (github) {
+    if (github && github[issue.key]) {
         if (githubPulls) {
             pr = (github[issue.key].prs || []).map(p => {
                 let details = githubPulls[p.id];
@@ -50,19 +57,40 @@ function build(issue, state) {
         } else {
             pr = github[issue.key].prs;
         }
+        if (pr && pr.length) {
+            if (pr.map(x => x.status === 'OPEN').reduce((a,b) => (a || b))) {
+                button.push({
+                    text: `Open Agency CI`,
+                    url: `https://${issue.key}-app.tagger.dev`
+                }, {
+                    text: `Open Creator CI`,
+                    url: `https://${issue.key}-creator.tagger.dev`
+                }, {
+                    text: `Open Brand CI`,
+                    url: `https://${issue.key}-collaborator.tagger.dev`
+                });
+            }
+            pr.filter(x => x.status === 'OPEN').forEach(p => {
+                button.push({
+                    text: `Open PR #${p.id}`,
+                    url: pr.url
+                });
+            });
+        }
     }
 
     findAndFill(doc, {
         issue,
         rank,
         comment: issue.comments.slice(0, 3),
-        pr
+        pr,
+        button
     }); 
 
     doc.dataset.url = issue.url;
-    doc.addEventListener('click', () => {
-        shell.openExternal(issue.url, { activate: true });
-    });
+    // doc.addEventListener('click', () => {
+    //     shell.openExternal(issue.url, { activate: true });
+    // });
     // if (github && github.prs) {
     //     for (let pr of github.prs) {
     //         let temp = doc.querySelector('.pr').cloneNode(true);

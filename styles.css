@@ -2,6 +2,7 @@
 
 :root {
     --bg-color: #f8f5f4;
+    --secondary-bg-color: #d2bcb5;
     --hover-bg-color: #ffffff;
     --primary-text-color: #000000;
     --secondary-text-color: #222222;
@@ -9,6 +10,7 @@
 
 [data-theme="dark"] {
     --bg-color: #47494e;
+    --secondary-bg-color: #2a2b2b;
     --hover-bg-color: #000000;
     --primary-text-color: #ffffff;
     --secondary-text-color: gray;
@@ -262,15 +264,13 @@ body {
 .details-item__left {
     flex: 4;
     min-width: 0;
+    margin-right: 10px;
 }
 
 .details-item__right {
     flex: 1;
     min-width: 0;
-}
-
-.details-item:hover {
-    background-color: var(--hover-bg-color);
+    margin-left: 10px;
 }
 
 .details-item__header {
@@ -282,11 +282,30 @@ body {
     font-size: 14px;
 }
 
+.details-item__actions {
+    margin-top: 5px;
+}
+
+.details-item__button {
+    font-size: 12px;
+    font-family: inherit;
+    background-color: var(--secondary-bg-color);
+    color: var(--primary-text-color);
+    border: 1px rgba(0, 0, 0, 0.2) solid;
+    border-radius: 4px;
+    margin: 3px 0;
+    width: 100%;
+}
+
+.details-item__button:hover {
+    background-color: var(--hover-bg-color);
+}
+
 /* issue - details item, pr specific */
 
 .pr {
     background-color: rgba(0, 0, 255, 0.02);
-    border: 1px rgba(0, 0, 0, 0.2) solid;;
+    border: 1px rgba(0, 0, 0, 0.2) solid;
     border-radius: 4px;
     padding: 5px;
     margin-top: 5px;

@@ -1,4 +1,4 @@
-const { remote } = require('electron');
+const { remote, shell } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const parser = new DOMParser();
@@ -30,12 +30,16 @@ function appendChild(doc, selector, node) {
 
 function cartesian(a, b, ...c) {
     if (!b) return a.map(x => [x]);
-    console.debug('CARTESIAN INPUT', a, b, ...c);
     const f = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
     const cart = (a, b, ...c) => (b ? cart(f(a, b), ...c) : a);
     const final = cart(a, b, ...c)
-    console.debug('CARTESIAN FINAL', final);
     return final;
 }
 
-module.exports = { loadTemplate, emptyNode, appendChild, setLoading, cartesian };
+function openUrl(url) {
+    if (url) {
+        shell.openExternal(url, { activate: true });
+    }
+}
+
+module.exports = { loadTemplate, emptyNode, appendChild, setLoading, cartesian, openUrl };
