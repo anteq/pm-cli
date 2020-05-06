@@ -108,8 +108,8 @@ function buildReporter(fields) {
 function buildSprint(fields) {
     let data = fields.customfield_10000;
     if (!data || !data.length) return null;
-    let matchName = data[0].match(/name=(.*?),/);
-    let matchId = data[0].match(/id=(.*?),/);
+    let matchName = data[data.length - 1].match(/name=(.*?),/);
+    let matchId = data[data.length - 1].match(/id=(.*?),/);
     return {
         name: matchName ? matchName[1] : null,
         id: matchId ? matchId[1] : null
