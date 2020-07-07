@@ -21,7 +21,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "@types/node": "^13.13.0",
-    "electron": "^8.2.3",
+    "electron": "^8.2.4",
     "electron-builder": "^22.5.1"
   },
   "dependencies": {
