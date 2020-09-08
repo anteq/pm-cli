@@ -108,11 +108,10 @@ function buildReporter(fields) {
 function buildSprint(fields) {
     let data = fields.customfield_10000;
     if (!data || !data.length) return null;
-    let matchName = data[data.length - 1].match(/name=(.*?),/);
-    let matchId = data[data.length - 1].match(/id=(.*?),/);
+    let last = data[data.length - 1];
     return {
-        name: matchName ? matchName[1] : null,
-        id: matchId ? matchId[1] : null
+        name: last ? last.name : null,
+        id: last ? last.id : null
     };
 }
 
