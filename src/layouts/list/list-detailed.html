@@ -1,0 +1,64 @@
+<div class="details-item">
+  <div class="details-item__left">
+    <div class="details-item__header">
+      <div>
+        <img class="icon--big icon--priority" src="https://scalaric.atlassian.net/images/icons/priorities/major.svg" data-value="issue.priority" data-type="img">
+        <img class="icon--big icon--issuetype" src="https://scalaric.atlassian.net/secure/viewavatar?size=medium&amp;avatarId=10318&amp;avatarType=issuetype" data-value="issue.issuetype" data-type="img">
+        <span class="issue-key" data-value="issue.key" data-type="text">PT-2254</span>
+        <span class="issue-status" data-value="issue.status" data-type="text class">DONE</span>
+      </div>
+      <div>
+        <span class="details-item__title" data-value="issue.summary" data-type="text">Create account for Pedro bla bla</span>
+      </div>
+    </div>
+    <div class="data">
+      <span class="data__label">Reported</span>
+      <span class="data__value">
+        <span data-value="issue.reporter" data-type="text">Antek Grzanka</span> ·
+        <span data-value="issue.created" data-type="date">5 days ago</span>
+      </span>
+    </div>
+    <div class="comment ellipsis data" data-each="comment">
+      <img class="small-avatar" data-value="comment.author" data-type="img alt"></img>
+      <span class="data__value" data-value="comment.text" data-type="text">Wow amazing lol</span>
+      <span class="data__label" data-value="comment.created" data-type="date">5 days ago</span>
+    </div>
+    <div data-each="pr">
+      <div class="pr" data-value="pr.status" data-type="class">
+        <div class="pr__header">
+          <div class="github-logo"></div>
+          <span class="pr__header--title" data-value="pr.id" data-type="text">#580</span>
+          <span class="pr__header--status" data-value="pr.status" data-type="text">merged</span>
+          Last update: 
+          <span class="pr__header--sub" data-value="pr.updated" data-type="date">5 hours ago</span>
+          <span class="pr__header--sub" data-value="pr.labels" data-type="text">labels</span>
+        </div>
+        <div class="pr__links hide">
+          <button class="pr__links--app">AP</button><button class="pr__links--creator">CP</button><button class="pr__links--collaborator">BP</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="details-item__right">
+    <div class="data">
+      <img class="avatar" data-value="issue.assignee" data-type="img"></img>
+      <span class="data__value" data-value="issue.assignee" data-type="text">Antek Grzanka</span>
+    </div>
+    <div class="data">
+      <span class="data__label">Sprint</span>
+      <span class="data__value" data-value="issue.sprint" data-type="text">Sprint 131</span>
+    </div>
+    <div class="data">
+      <span class="data__label">Issues before this:</span>
+      <span class="data__value" data-value="rank.index" data-type="text"></span>
+    </div>
+    <div class="details-item__actions">
+      <div data-each="button">
+        <button data-value="button.url" data-type="url" class="details-item__button">
+          <span data-value="button.text" data-type="text"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

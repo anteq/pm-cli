@@ -48,5 +48,10 @@ module.exports = {
             name: 'Trivial',
             jiraId: 5
         }
-    ]
+    ],
+    resolutionCategories: {
+        "TO_DO": "To Do",
+        "IN_PROGRESS": "In Progress",
+        "DONE": "Done"
+    }
 };

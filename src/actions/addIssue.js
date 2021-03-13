@@ -6,17 +6,17 @@ const config = {
     key: 'addIssue',
     name: 'Create new issue',
     icon: '🔖',
-    context: 'project',
     triggers: ['{project} new', '{project} create', '{project} add'],
     arguments: true,
+    layout: 'hero',
     resolve: resolveAdd
 };
 module.exports = config;
 
-function resolveAdd(context, value) {
-    let arguments = parseArguments(value);
+function resolveAdd(state) {
+    let arguments = parseArguments(state.match.input);
     let props = [
-        findProject(context.project),
+        findProject(state.match.project),
         findReporter(reporter),
         findAssignee(arguments.properties),
         findPriority(arguments.properties),
@@ -25,14 +25,14 @@ function resolveAdd(context, value) {
         findSummary(arguments.summary)
     ].filter(x => !!x);
     return {
-        url: buildUrl(props, context),
-        text: buildText(props),
-        icon: config.icon
-    };
+        url: buildUrl(props, state.match.project),
+        icon: config.icon,
+        text: buildText(props)
+    }
 }
 
-function buildUrl(props, context) {
-    return `${context.project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.length ? props.map(x => `${x.jiraKey}=${x.value}`).join('&') : ''}`;
+function buildUrl(props, project) {
+    return `${project.baseUrl}/secure/CreateIssueDetails!init.jspa?${props.length ? props.map(x => `${x.jiraKey}=${x.value}`).join('&') : ''}`;
 }
 
 function buildText(props) {

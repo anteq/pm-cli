@@ -1,12 +1,11 @@
-const { wrap } = require('../wrap');
 const jira = require('../connectors/jira');
 
 const config = {
-    key: 'searchIssues',
-    name: 'Search issues',
+    key: 'openDev',
+    name: 'Search issues by developer',
     icon: '🔍',
-    triggers: ['{project} '],
-    arguments: true,
+    triggers: ['{project} {person}'],
+    arguments: false,
     layout: 'list',
     resolve: resolveSearch
 };
@@ -22,22 +21,21 @@ function resolveSearch(state) {
     setTimeout(() => callSearch(state));
     return {
         url: createSearchUrl(state.match.project, state.match.input),
-        text: wrap(`Search ${state.match.input ? 'for {search}': ''} within {project}`, { search: state.match.input, project: state.match.project.key.toUpperCase() }),
         cancel
     };
 }
 
 function callSearch(state) {
     if (call) call.cancel();
-    call = jira.searchIssues(state.match.project, buildJQL(state.match.project, state.match.input))
+    call = jira.getCurrentSprint(state.match.project, state.match.person);
     call.then((result) => {
         state.content.items = result;
         state.drawLayout();
     });
 }
 
-function buildJQL(project, value) {
-    return `project = ${project.key.toUpperCase()} ${ value ? 'and text ~"' + value + '\"' : ''} order by created desc`;
+function buildJQL(project, assignee, value) {
+    return `project = ${project.key.toUpperCase()} and assignee = ${assignee.jiraId} ${ value ? 'and text ~"' + value + '\"' : ''} order by rank desc`;
 }
 
 function createSearchUrl(project, value) {

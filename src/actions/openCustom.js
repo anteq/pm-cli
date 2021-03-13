@@ -4,17 +4,17 @@ const config = {
     key: 'openCustom',
     name: 'Open Custom URL',
     icon: '🌐',
-    context: 'custom',
     triggers: ['{custom}'],
     arguments: false,
+    layout: 'hero',
     resolve: resolveCustom
 };
 module.exports = config;
 
-function resolveCustom(context, value) {
+function resolveCustom(state) {
     return {
-        url: context.custom.url,
-        text: wrap(`Open {custom}`, { custom: context.custom.name }),
+        url: state.match.custom.url,
+        text: wrap(`Open {custom}`, { custom: state.match.custom.name }),
         icon: config.icon
     };
 }
