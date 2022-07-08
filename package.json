@@ -28,7 +28,7 @@
     "axios": "^0.21.1",
     "electron-store": "^5.1.1",
     "js-yaml": "^3.13.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "v8-compile-cache": "^2.1.0"
   },
   "build": {
